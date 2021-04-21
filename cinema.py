@@ -105,11 +105,18 @@ def create_customer():
         }), 400
     
     pw_hash = bcrypt.generate_password_hash(data.get('customer_password')).decode('UTF-8')
-
-    cust = Customer(
-        customer_name = data['customer_name'],
-        customer_email = data['customer_email'],
-        customer_password = pw_hash
+    if 'is_admin' in data:
+        cust = Customer(
+            customer_name = data['customer_name'],
+            customer_email = data['customer_email'],
+            customer_password = pw_hash,
+            is_admin = data['is_admin']
+        )
+    else:
+         cust = Customer(
+            customer_name = data['customer_name'],
+            customer_email = data['customer_email'],
+            customer_password = pw_hash
         )
     try:
         db.session.add(cust)
@@ -154,7 +161,7 @@ def login_customer():
             "message" : "Wrong email or password!"
         }), 401
 
-    payload = {'customer_id' : cust.customer_id, 'customer_email' : cust.customer_email}
+    payload = {'customer_id' : cust.customer_id, 'customer_email' : cust.customer_email, 'is_admin': cust.is_admin}
     encoded_jwt = jwt.encode(payload, 'secret', algorithm="HS256")
 
     if bcrypt.check_password_hash(cust.customer_password, data["customer_password"]):
@@ -170,8 +177,8 @@ def login_customer():
             "message" : "Wrong email or password!"
         }), 401
 
-@app.route('/update_customer/<id>', methods = ['PUT'])
-def update_customer(id):
+@app.route('/update_customer/', methods = ['PUT'])
+def update_customer():
     data = request.get_json()
 
     token = request.headers.get("access_token").encode('UTF-8')
@@ -187,7 +194,7 @@ def update_customer(id):
             'message' : 'Access token is invalid!'
         }), 401
 
-    cust = Customer.query.filter_by(customer_id = id).first_or_404()
+    cust = Customer.query.filter_by(customer_id = decoded_token["customer_id"]).first_or_404()
 
     if 'customer_password' in data:
         pw_hash = bcrypt.generate_password_hash(data.get('customer_password')).decode('UTF-8')
@@ -223,6 +230,20 @@ def update_customer(id):
 @app.route('/create_movie/', methods=['POST'])
 def create_movie():
     data = request.get_json()
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+
+    if decoded_token['is_admin'] != True:
+        return jsonify({
+            'error': 'Unauthorized',
+            'message': 'You are not an admin.'
+        }), 401
+    
     if not 'movie_name' in data and not 'movie_category' in data:
         return jsonify({
             'error' : 'Bad request',
@@ -254,6 +275,20 @@ def create_movie():
 @app.route('/update_movie/<id>/', methods = ['PUT'])
 def update_movie(id):
     data = request.get_json()
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+
+    if decoded_token['is_admin'] != True:
+        return jsonify({
+            'error': 'Unauthorized',
+            'message': 'You are not an admin.'
+        }), 401
+
     mov = Movie.query.filter_by(movie_id = id).first_or_404()
 
     if 'movie_name' in data:
@@ -277,6 +312,20 @@ def update_movie(id):
 @app.route('/add_movie_schedule/', methods = ['POST'])
 def add_movie_schedule():
     data = request.get_json()
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+
+    if decoded_token['is_admin'] != True:
+        return jsonify({
+            'error': 'Unauthorized',
+            'message': 'You are not an admin.'
+        }), 401
+
     if not 'start_movie' in data and not 'end_movie' in data and not 'movie_id' in data and not 'movie_price' in data and not 'auditorium_id' in data:
         return jsonify({
             'error': 'Bad Request',
@@ -305,6 +354,20 @@ def add_movie_schedule():
 @app.route('/edit_movie_schedule/<id>', methods = ['PUT'])
 def edit_movie_schedule(id):
     data = request.get_json()
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+
+    if decoded_token['is_admin'] != True:
+        return jsonify({
+            'error': 'Unauthorized',
+            'message': 'You are not an admin.'
+        }), 401
+        
     schedule = ScheduledMovie.query.filter_by(scheduled_movie_id = id).first_or_404()
 
     if 'start_movie' in data:
@@ -328,7 +391,7 @@ def edit_movie_schedule(id):
 def get_list_movie(date):
     all = []
     with engine.connect() as connection:
-        qry = text("SELECT * FROM public.movie JOIN scheduled_movie USING (movie_id) WHERE start_movie=:date")
+        qry = text("SELECT * FROM movie JOIN scheduled_movie USING (movie_id) WHERE start_movie ILIKE '{}%'".format(date))
         result = connection.execute(qry, date=date)
         for item in result:
             all.append({
@@ -336,7 +399,9 @@ def get_list_movie(date):
                 'title': item[1],
                 'duration' : item[2],
                 'published_year' : item[3],
-                'category' : item[4]
+                'category' : item[4],
+                'start' : item[6],
+                'end' : item[7]
             })
     return jsonify(all)
 
@@ -361,6 +426,8 @@ def search_movie(title):
 @app.route('/top_up/<id>/', methods = ['PUT'])
 def top_up(id):
     data = request.get_json()
+
+    #query from Wallet class to get the account by ID
     top = Wallet.query.filter_by(wallet_id=id).first_or_404()
 
     if 'total_amount' in data:
@@ -368,6 +435,7 @@ def top_up(id):
     
     db.session.commit()
 
+    #query from WalletTransaction class to add the transaction history into database
     wallTrans = WalletTransaction(
         wallet_id = id,
         total_amount = data['total_amount'],
@@ -392,13 +460,16 @@ def buy_ticket():
             'message': 'Seat ID, customer ID, scheduled movie ID, quantity or booking status can not be empty'
         }), 400
 
+    #query this to filter the ScheduledMovie by scheduled-movie-ID
     try:
         schedule = ScheduledMovie.query.filter_by(scheduled_movie_id=data['scheduled_movie_id']).first_or_404()
     except:
         return "Movie within the ID does not exist"
     
+    #totalling the price of movie 
     total_price = schedule.movie_price * data['quantity']
 
+    #adding the following variable from the Booking class
     book = Booking(
         seat_id = data['seat_id'],
         customer_id = data['customer_id'],
@@ -407,10 +478,10 @@ def buy_ticket():
         total_price = total_price,
         quantity = data['quantity']
     )
-
     db.session.add(book)
     db.session.commit()
-    
+
+    #using raw query to join
     with engine.connect() as connection:
         all = []
         qry = text("SELECT * FROM booking JOIN scheduled_movie USING (scheduled_movie_id) WHERE booking_id=:booking_id")
@@ -428,7 +499,6 @@ def buy_ticket():
                 'quantity' : item[5],
                 'total_price' : item[6]
         })
-    
     return jsonify(all)
 
 @app.route('/pay_ticket/', methods = ['POST'])
@@ -440,25 +510,29 @@ def pay_ticket():
             'message' : 'Wallet ID or booking ID must be given'
         }), 400
     
+    #query of filtering the Booking class using booking ID
     pay = Booking.query.filter_by(booking_id = data['booking_id']).first_or_404()
+
+    #query of filtering the Wallet class using wallet ID
     wal = Wallet.query.filter_by(wallet_id = data['wallet_id']).first_or_404()
 
+    #validate if the saldo is sufficient, then updating the booking status
     if pay.total_price <= wal.total_amount :
         wal.total_amount -= pay.total_price
         pay.booking_status = "Paid"
-
+    #otherwise, then return this.
+    else:
+        return "Saldo is not sufficient, top up first!"
     db.session.commit()
 
-    #creating transaction history
+    #if the saldo is sufficient, then it will automatically create transaction history from the WalletTransaction
     wallTrans = WalletTransaction(
         total_amount = pay.total_price,
         transaction_status = "Success payment",
         wallet_id = wal.wallet_id
     )
-
     db.session.add(wallTrans)
     db.session.commit()
-
     return jsonify({
         'booking_id' : pay.booking_id,
         'booking_status' : pay.booking_status,
