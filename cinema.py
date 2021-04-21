@@ -196,6 +196,12 @@ def update_customer():
 
     cust = Customer.query.filter_by(customer_id = decoded_token["customer_id"]).first_or_404()
 
+    if 'is_admin' in data:
+        return jsonify({
+            'error' : 'Unauthorized',
+            'message' : 'You can not be an admin.'
+        }), 401
+        
     if 'customer_password' in data:
         pw_hash = bcrypt.generate_password_hash(data.get('customer_password')).decode('UTF-8')
         cust.customer_password = pw_hash
@@ -367,7 +373,7 @@ def edit_movie_schedule(id):
             'error': 'Unauthorized',
             'message': 'You are not an admin.'
         }), 401
-        
+
     schedule = ScheduledMovie.query.filter_by(scheduled_movie_id = id).first_or_404()
 
     if 'start_movie' in data:
@@ -426,6 +432,19 @@ def search_movie(title):
 @app.route('/top_up/<id>/', methods = ['PUT'])
 def top_up(id):
     data = request.get_json()
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+
+    if decoded_token['is_admin'] != True:
+        return jsonify({
+            'error': 'Unauthorized',
+            'message': 'You are not an admin.'
+        }), 401
 
     #query from Wallet class to get the account by ID
     top = Wallet.query.filter_by(wallet_id=id).first_or_404()
