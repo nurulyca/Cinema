@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify
-from datetime import date
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 from flask_bcrypt import Bcrypt
@@ -53,7 +52,7 @@ class Customer(db.Model):
 class Booking(db.Model):
     __tablename__ = 'booking'
     __table_args__ = (
-        db.UniqueConstraint('seat_id', 'scheduled_movie_id', 'auditorium_id'),
+        db.UniqueConstraint('seat_id', 'scheduled_movie_id'),
     )
     booking_id = db.Column(db.Integer, primary_key=True, index=True)
     seat_id = db.Column(db.Integer, nullable=False)
@@ -62,7 +61,6 @@ class Booking(db.Model):
     booking_status = db.Column(db.String, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    auditorium_id = db.Column(db.Integer, nullable=False)
 
 class Wallet(db.Model):
     wallet_id = db.Column(db.Integer, primary_key=True, index=True)
@@ -108,7 +106,7 @@ def create_customer():
             is_admin = data['is_admin']
         )
     else:
-         cust = Customer(
+        cust = Customer(
             customer_name = data['customer_name'],
             customer_email = data['customer_email'],
             customer_password = pw_hash
@@ -121,25 +119,33 @@ def create_customer():
             'error' : 'Email has been taken.'
         }, 400
     
+    if 'is_admin' not in data:
     #creating new wallet at the same time while registering new customer
-    wall = Wallet(
-        customer_id = cust.customer_id
-    )
-    try:
-        db.session.add(wall)
-        db.session.commit()
-    except:
-        return {
-            'error' : 'Error in creating wallet.'
-        }, 400
+        wall = Wallet(
+            customer_id = cust.customer_id
+        )
+        try:
+            db.session.add(wall)
+            db.session.commit()
+        except:
+            return {
+                'error' : 'Error in creating wallet.'
+            }, 400
 
-    return{
-        'customer_id' : cust.customer_id,
-        'name' : cust.customer_name,
-        'email' : cust.customer_email,
-        'password' : cust.customer_password,
-        'wallet_id': wall.wallet_id
-    }, 201
+        return{
+            'customer_id' : cust.customer_id,
+            'name' : cust.customer_name,
+            'email' : cust.customer_email,
+            'password' : cust.customer_password,
+            'wallet_id': wall.wallet_id
+        }, 201
+    else:
+        return{
+            'customer_id' : cust.customer_id,
+            'name' : cust.customer_name,
+            'email' : cust.customer_email,
+            'password' : cust.customer_password
+        }, 201
 
 @app.route('/login_customer/', methods = ['POST'])
 def login_customer():
@@ -468,10 +474,30 @@ def top_up(id):
 @app.route('/buy_ticket/', methods=['POST'])
 def buy_ticket():
     data = request.get_json()
-    if not 'seat_id' in data and not 'customer_id' in data and not 'scheduled_movie_id' in data and not 'booking_status' in data and not 'quantity' in data and not 'auditorium_id' in data: 
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+    
+    if not 'customer_id' in decoded_token and not 'customer_email' in decoded_token:
+        return jsonify({
+            'error' : 'Bad Request',
+            'message' : 'Access token is invalid!'
+        }), 401
+
+    if not 'array_seats' in data or not 'scheduled_movie_id' in data or not 'booking_status' in data :
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Seat ID, customer ID, scheduled movie ID, auditorium ID, quantity or booking status can not be empty'
+            'message': 'Array seat, customer ID, scheduled movie ID or booking status can not be empty'
+        }), 400
+
+    if len(data["array_seats"]) == 0:
+        return jsonify({
+            'error': 'Bad Request',
+            'message': 'Array seats can not be empty'
         }), 400
 
     try:
@@ -480,28 +506,30 @@ def buy_ticket():
         return "Movie within the ID does not exist"
     
     #totalling the price of movie 
-    total_price = schedule.movie_price * data['quantity']
+    total_price = schedule.movie_price
+    booking_ids = []
 
     #adding the following variable from the Booking class to database
-    book = Booking(
-        seat_id = data['seat_id'],
-        customer_id = data['customer_id'],
-        scheduled_movie_id = data['scheduled_movie_id'],
-        booking_status = data['booking_status'],
-        total_price = total_price,
-        quantity = data['quantity'],
-        auditorium_id = data['auditorium_id']
-    )
-    try:
-        db.session.add(book)
-        db.session.commit()
-    except:
-        return "Your chosen seat is unavailable."
+    for seat_id in data["array_seats"]:
+        book = Booking(
+            seat_id = seat_id,
+            customer_id = decoded_token['customer_id'],
+            scheduled_movie_id = data['scheduled_movie_id'],
+            booking_status = data['booking_status'],
+            total_price = total_price,
+            quantity = 1,
+        )
+        try:
+            db.session.add(book)
+            db.session.commit()
+            booking_ids.append(book.booking_id)
+        except:
+            return "Your chosen seat is unavailable."
 
     with engine.connect() as connection:
         all = []
-        qry = text("SELECT * FROM booking JOIN scheduled_movie USING (scheduled_movie_id) WHERE booking_id=:booking_id")
-        result = connection.execute(qry, booking_id=book.booking_id)
+        qry = text("SELECT * FROM booking JOIN scheduled_movie USING (scheduled_movie_id) WHERE booking_id BETWEEN :one AND :last")
+        result = connection.execute(qry, one=booking_ids[0], last=booking_ids[-1])
         for item in result:
             all.append({
                 'booking_id': item[1], 
@@ -510,9 +538,7 @@ def buy_ticket():
                 'booking_status': item[4],
                 'start_time' : item[7],
                 'end_time' : item[8],
-                'price' : item[9],
-                'auditorium_id' : item[12],
-                'quantity' : item[5],
+                'auditorium_id' : item[11],
                 'total_price' : item[6]
         })
     return jsonify(all)
@@ -520,6 +546,20 @@ def buy_ticket():
 @app.route('/pay_ticket/', methods = ['POST'])
 def pay_ticket():
     data = request.get_json()
+
+    token = request.headers.get("access_token").encode('UTF-8')
+
+    try:
+        decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
+    except jwt.exceptions.DecodeError:
+        return "Access token is invalid!"
+
+    if not 'customer_id' in decoded_token and not 'customer_email' in decoded_token:
+        return jsonify({
+            'error' : 'Bad Request',
+            'message' : 'Access token is invalid!'
+        }), 401
+
     if not 'wallet_id' in data and not 'booking_id' in data:
         return jsonify({
             'error' : 'Bad Request',
@@ -531,6 +571,12 @@ def pay_ticket():
 
     #query of filtering the Wallet class using wallet ID
     wal = Wallet.query.filter_by(wallet_id = data['wallet_id']).first_or_404()
+
+    if decoded_token["customer_id"] != wal.customer_id:
+         return jsonify({
+            'error' : 'Bad Request',
+            'message' : 'You do not belong to this wallet!'
+        }), 400
 
     #validate if the saldo is sufficient, then updating the booking status
     if pay.total_price <= wal.total_amount :
@@ -545,7 +591,8 @@ def pay_ticket():
     wallTrans = WalletTransaction(
         total_amount = pay.total_price,
         transaction_status = "Success payment",
-        wallet_id = wal.wallet_id
+        wallet_id = wal.wallet_id,
+        booking_id = pay.booking_id
     )
     db.session.add(wallTrans)
     db.session.commit()
