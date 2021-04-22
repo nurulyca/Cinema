@@ -22,21 +22,11 @@ engine = create_engine(connect_str, echo=False)
 class Auditorium(db.Model):
     auditorium_id = db.Column(db.Integer, primary_key=True, index=True)
 
-class RowSeat(db.Model):
-    row_seat_id = db.Column(db.Integer, primary_key=True, index=True)
-    auditorium_id = db.Column(db.Integer, foreign_key=True, nullable=False)
-    total_row = db.Column(db.Integer, nullable=False)
-    seats = db.Column(db.Integer, nullable=False)
-
 class Seat(db.Model):
     seat_id = db.Column(db.Integer, primary_key=True, index=True)
-    row_seat_id = db.Column(db.Integer, foreign_key=True, nullable=False)
-    seat_name = db.Column(db.String, nullable=False)
-    seat_type_id = db.Column(db.Integer, foreign_key=True, nullable=False)
-
-class SeatType(db.Model):
-    seat_type_id = db.Column(db.Integer, primary_key=True)
-    seat_type_name = db.Column(db.String, nullable=False)
+    auditorium_id = db.Column(db.Integer, foreign_key=True, nullable=False)
+    row_id = db.Column(db.String, nullable=False)
+    row_seat_id = db.Column(db.Integer, nullable=False)
 
 class Movie(db.Model):
     movie_id = db.Column(db.Integer, primary_key=True)
@@ -61,13 +51,18 @@ class Customer(db.Model):
     is_admin = db.Column(db.Boolean, nullable=False)
 
 class Booking(db.Model):
+    __tablename__ = 'booking'
+    __table_args__ = (
+        db.UniqueConstraint('seat_id', 'scheduled_movie_id', 'auditorium_id'),
+    )
     booking_id = db.Column(db.Integer, primary_key=True, index=True)
-    seat_id = db.Column(db.Integer, nullable=False, unique=True)
+    seat_id = db.Column(db.Integer, nullable=False)
     customer_id = db.Column(db.Integer, foreign_key=True, nullable=False)
     scheduled_movie_id = db.Column(db.Integer, foreign_key=True, nullable=False)
     booking_status = db.Column(db.String, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    auditorium_id = db.Column(db.Integer, nullable=False)
 
 class Wallet(db.Model):
     wallet_id = db.Column(db.Integer, primary_key=True, index=True)
@@ -201,7 +196,7 @@ def update_customer():
             'error' : 'Unauthorized',
             'message' : 'You can not be an admin.'
         }), 401
-        
+
     if 'customer_password' in data:
         pw_hash = bcrypt.generate_password_hash(data.get('customer_password')).decode('UTF-8')
         cust.customer_password = pw_hash
@@ -473,13 +468,12 @@ def top_up(id):
 @app.route('/buy_ticket/', methods=['POST'])
 def buy_ticket():
     data = request.get_json()
-    if not 'seat_id' in data and not 'customer_id' in data and not 'scheduled_movie_id' in data and not 'booking_status' in data and not 'quantity' in data: 
+    if not 'seat_id' in data and not 'customer_id' in data and not 'scheduled_movie_id' in data and not 'booking_status' in data and not 'quantity' in data and not 'auditorium_id' in data: 
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Seat ID, customer ID, scheduled movie ID, quantity or booking status can not be empty'
+            'message': 'Seat ID, customer ID, scheduled movie ID, auditorium ID, quantity or booking status can not be empty'
         }), 400
 
-    #query this to filter the ScheduledMovie by scheduled-movie-ID
     try:
         schedule = ScheduledMovie.query.filter_by(scheduled_movie_id=data['scheduled_movie_id']).first_or_404()
     except:
@@ -488,19 +482,22 @@ def buy_ticket():
     #totalling the price of movie 
     total_price = schedule.movie_price * data['quantity']
 
-    #adding the following variable from the Booking class
+    #adding the following variable from the Booking class to database
     book = Booking(
         seat_id = data['seat_id'],
         customer_id = data['customer_id'],
         scheduled_movie_id = data['scheduled_movie_id'],
         booking_status = data['booking_status'],
         total_price = total_price,
-        quantity = data['quantity']
+        quantity = data['quantity'],
+        auditorium_id = data['auditorium_id']
     )
-    db.session.add(book)
-    db.session.commit()
+    try:
+        db.session.add(book)
+        db.session.commit()
+    except:
+        return "Your chosen seat is unavailable."
 
-    #using raw query to join
     with engine.connect() as connection:
         all = []
         qry = text("SELECT * FROM booking JOIN scheduled_movie USING (scheduled_movie_id) WHERE booking_id=:booking_id")
@@ -514,7 +511,7 @@ def buy_ticket():
                 'start_time' : item[7],
                 'end_time' : item[8],
                 'price' : item[9],
-                'auditorium_id' : item[11],
+                'auditorium_id' : item[12],
                 'quantity' : item[5],
                 'total_price' : item[6]
         })
