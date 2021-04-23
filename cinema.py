@@ -507,6 +507,7 @@ def buy_ticket():
     
     #totalling the price of movie 
     total_price = schedule.movie_price
+
     booking_ids = []
 
     #adding the following variable from the Booking class to database
@@ -517,7 +518,7 @@ def buy_ticket():
             scheduled_movie_id = data['scheduled_movie_id'],
             booking_status = data['booking_status'],
             total_price = total_price,
-            quantity = 1,
+            quantity = 1
         )
         try:
             db.session.add(book)
