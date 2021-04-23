@@ -50,17 +50,22 @@ class Customer(db.Model):
     is_admin = db.Column(db.Boolean, nullable=False)
 
 class Booking(db.Model):
-    __tablename__ = 'booking'
-    __table_args__ = (
-        db.UniqueConstraint('seat_id', 'scheduled_movie_id'),
-    )
     booking_id = db.Column(db.Integer, primary_key=True, index=True)
-    seat_id = db.Column(db.Integer, nullable=False)
     customer_id = db.Column(db.Integer, foreign_key=True, nullable=False)
     scheduled_movie_id = db.Column(db.Integer, foreign_key=True, nullable=False)
     booking_status = db.Column(db.String, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+
+class BookingItem(db.Model):
+    __tablename__ = 'booking_item'
+    __table_args__ = (
+        db.UniqueConstraint('seat_id', 'scheduled_movie_id'),
+    )
+    booking_item_id = db.Column(db.Integer, primary_key=True, index=True)
+    booking_id = db.Column(db.Integer, foreign_key=True, index=True)
+    seat_id = db.Column(db.Integer, nullable=False)
+    scheduled_movie_id = db.Column(db.Integer, foreign_key=True, nullable=False)
 
 class Wallet(db.Model):
     wallet_id = db.Column(db.Integer, primary_key=True, index=True)
@@ -506,42 +511,51 @@ def buy_ticket():
         return "Movie within the ID does not exist"
     
     #totalling the price of movie 
-    total_price = schedule.movie_price
+    total_price = schedule.movie_price * len(data["array_seats"])
 
     booking_ids = []
-
-    #adding the following variable from the Booking class to database
-    for seat_id in data["array_seats"]:
-        book = Booking(
-            seat_id = seat_id,
+    book = Booking(
             customer_id = decoded_token['customer_id'],
             scheduled_movie_id = data['scheduled_movie_id'],
             booking_status = data['booking_status'],
             total_price = total_price,
-            quantity = 1
+            quantity = len(data["array_seats"])
+        )
+    try:
+        db.session.add(book)
+        db.session.commit()
+    except:
+        return "Your chosen seat is unavailable."
+
+    #adding the following variable from the Booking class to database
+    for seat_id in data["array_seats"]:
+        book_item = BookingItem(
+            seat_id = seat_id,
+            scheduled_movie_id = data['scheduled_movie_id'],
+            booking_id = book.booking_id
         )
         try:
-            db.session.add(book)
+            db.session.add(book_item)
             db.session.commit()
-            booking_ids.append(book.booking_id)
         except:
             return "Your chosen seat is unavailable."
 
     with engine.connect() as connection:
         all = []
-        qry = text("SELECT * FROM booking JOIN scheduled_movie USING (scheduled_movie_id) WHERE booking_id BETWEEN :one AND :last")
-        result = connection.execute(qry, one=booking_ids[0], last=booking_ids[-1])
+        qry = text("SELECT * FROM booking_item JOIN scheduled_movie USING (scheduled_movie_id) join booking using(booking_id)join movie using(movie_id) WHERE booking_id=:booking_id")
+        result = connection.execute(qry, booking_id=book.booking_id)
         for item in result:
             all.append({
                 'booking_id': item[1], 
-                'seat_id': item[2], 
-                'customer_id': item[3],
-                'booking_status': item[4],
-                'start_time' : item[7],
-                'end_time' : item[8],
-                'auditorium_id' : item[11],
-                'total_price' : item[6]
-        })
+                'seat_id': item[4], 
+                'title': item[14],
+                'booking_status': item[11],
+                'start_time' : item[5],
+                'end_time' : item[6],
+                'auditorium_id' : item[8],
+                'total_price' : item[13],
+                'quantity' : item[12]
+            })
     return jsonify(all)
 
 @app.route('/pay_ticket/', methods = ['POST'])
