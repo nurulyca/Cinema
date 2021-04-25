@@ -622,7 +622,7 @@ def pay_ticket():
 def top_five():
     all = []
     with engine.connect() as connection:
-        qry = text("SELECT movie.movie_id, movie.movie_name, COUNT(movie.movie_id) AS total FROM booking INNER JOIN scheduled_movie using (scheduled_movie_id) INNER JOIN movie USING (movie_id) WHERE booking_status = 'Paid' GROUP BY movie.movie_id ORDER BY total desc limit 5")
+        qry = text("SELECT movie.movie_id, movie.movie_name, COUNT(booking_item.booking_item_id) AS total FROM booking_item INNER JOIN booking USING(booking_id) INNER JOIN scheduled_movie ON booking_item.scheduled_movie_id = scheduled_movie.scheduled_movie_id INNER JOIN movie USING (movie_id) WHERE booking_status = 'Paid' GROUP BY movie.movie_id ORDER BY total desc limit 5")
         result = connection.execute(qry)
         for item in result:
             all.append({
