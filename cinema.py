@@ -513,7 +513,6 @@ def buy_ticket():
     #totalling the price of movie 
     total_price = schedule.movie_price * len(data["array_seats"])
 
-    booking_ids = []
     book = Booking(
             customer_id = decoded_token['customer_id'],
             scheduled_movie_id = data['scheduled_movie_id'],
@@ -542,7 +541,7 @@ def buy_ticket():
 
     with engine.connect() as connection:
         all = []
-        qry = text("SELECT * FROM booking_item JOIN scheduled_movie USING (scheduled_movie_id) join booking using(booking_id)join movie using(movie_id) WHERE booking_id=:booking_id")
+        qry = text("SELECT * FROM booking_item JOIN scheduled_movie USING (scheduled_movie_id) JOIN booking USING(booking_id) JOIN movie USING(movie_id) WHERE booking_id=:booking_id")
         result = connection.execute(qry, booking_id=book.booking_id)
         for item in result:
             all.append({
@@ -554,7 +553,7 @@ def buy_ticket():
                 'end_time' : item[6],
                 'auditorium_id' : item[8],
                 'total_price' : item[13],
-                'quantity' : item[12]
+                'total_quantity' : item[12]
             })
     return jsonify(all)
 
