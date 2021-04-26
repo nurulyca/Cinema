@@ -493,10 +493,10 @@ def buy_ticket():
             'message' : 'Access token is invalid!'
         }), 401
 
-    if not 'array_seats' in data or not 'scheduled_movie_id' in data or not 'booking_status' in data :
+    if not 'array_seats' in data or not 'scheduled_movie_id' in data or not 'wallet_id' in data:
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Array seat, customer ID, scheduled movie ID or booking status can not be empty'
+            'message': 'Array seat, customer ID, scheduled movie ID, wallet ID or booking status can not be empty'
         }), 400
 
     if len(data["array_seats"]) == 0:
@@ -509,24 +509,35 @@ def buy_ticket():
         schedule = ScheduledMovie.query.filter_by(scheduled_movie_id=data['scheduled_movie_id']).first_or_404()
     except:
         return "Movie within the ID does not exist"
+
+    with engine.connect() as connection:
+        qry = text("SELECT * FROM booking_item WHERE seat_id IN {} and scheduled_movie_id=:id".format(tuple(data['array_seats'])))
+        result = connection.execute(qry, id=data["scheduled_movie_id"])
+        if len(list(result)) > 0:
+            return "The chosen seat is unavailable."
     
     #totalling the price of movie 
     total_price = schedule.movie_price * len(data["array_seats"])
 
-    book = Booking(
+    wal = Wallet.query.filter_by(wallet_id = data['wallet_id']).first_or_404()
+
+    if total_price <= wal.total_amount:
+        book = Booking(
             customer_id = decoded_token['customer_id'],
             scheduled_movie_id = data['scheduled_movie_id'],
-            booking_status = data['booking_status'],
+            booking_status = "Paid",
             total_price = total_price,
             quantity = len(data["array_seats"])
         )
-    try:
-        db.session.add(book)
-        db.session.commit()
-    except:
-        return "Your chosen seat is unavailable."
+        wal.total_amount -= total_price
+        try:
+            db.session.add(book)
+            db.session.commit()
+        except:
+            return "Your chosen seat is unavailable."
+    else:
+        return "Saldo is not sufficient, top up first!"
 
-    #adding the following variable from the Booking class to database
     for seat_id in data["array_seats"]:
         book_item = BookingItem(
             seat_id = seat_id,
