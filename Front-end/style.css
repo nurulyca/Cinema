@@ -1,0 +1,41 @@
+body {font-family: Arial, Helvetica, sans-serif;
+    background-image: url('./CINEMA_SEATS.jpg');
+    background-size: 150%;
+    background-repeat: no-repeat;
+    width: 100vw;
+    color: cornsilk;
+}
+
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid rgb(210, 198, 198);
+  box-sizing: border-box;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  border-radius: 10px;
+}
+
+input[type=submit] {
+    background-color: maroon;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+  }
+
+
