@@ -1,14 +1,25 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 from flask_bcrypt import Bcrypt
 from flask_jwt import JWT, jwt_required, current_identity
 import jwt
 import re
+from flask_cors import CORS, cross_origin
+
+cors_config = {
+    "origins": ["http://127.0.0.1:5001"],
+    "methods": ["GET", "POST", "PUT", "DELETE"]
+}
 
 app = Flask(__name__)
+
+CORS(app, resources={
+    r"/*": cors_config
+})
+
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
@@ -399,6 +410,24 @@ def edit_movie_schedule(id):
         'auditorium_id' : schedule.auditorium_id
         }, 201
 
+@app.route('/list_movie')
+def get_all_movie():
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT * FROM movie")
+        result = connection.execute(qry)
+        for item in result:
+            all.append({
+                'movie_id': item[0],
+                'title': item[1],
+                'duration' : item[2],
+                'published_year' : item[3],
+                'movie_poster': item[5],
+                'category' : item[4],
+
+            })
+    return jsonify(all)
+
 @app.route('/list_movie/<date>')
 def get_list_movie(date):
     all = []
@@ -407,21 +436,24 @@ def get_list_movie(date):
         result = connection.execute(qry, date=date)
         for item in result:
             all.append({
-                'movie_id': item[0],
                 'title': item[1],
                 'duration' : item[2],
-                'published_year' : item[3],
+                'release_year' : item[3],
                 'category' : item[4],
-                'start' : item[6],
-                'end' : item[7]
+                'start_time' : item[7],
+                'end_time' : item[8],
+                'price' : item[9],
+                'poster' : item[5],
+                'movie_id': item[0]
             })
     return jsonify(all)
 
-@app.route('/search_movie/<title>')
-def search_movie(title):
+
+@app.route('/search_movie/<keyword>')
+def search_movie(keyword):
     all = []
     with engine.connect() as connection:
-        qry = text("SELECT * FROM movie JOIN scheduled_movie USING (movie_id) WHERE movie_name ILIKE'%{}%';".format(title))
+        qry = text("SELECT * FROM movie JOIN scheduled_movie USING (movie_id) WHERE movie_name ILIKE'%{}%' OR start_movie ILIKE '{}%';".format(keyword, keyword))
         result = connection.execute(qry)
         for item in result:
             all.append({
@@ -429,9 +461,30 @@ def search_movie(title):
                 'duration' : item[2],
                 'release_year' : item[3],
                 'category' : item[4],
-                'start_time' : item[6],
-                'end_time' : item[7],
-                'price' : item[8]
+                'start_time' : item[7],
+                'end_time' : item[8],
+                'price' : item[9],
+                'poster' : item[5],
+                'movie_id': item[0]
+            })
+    return jsonify(all)
+
+@app.route('/detail_movie/<id>')
+def detail_movie(id):
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT * FROM movie JOIN scheduled_movie USING (movie_id) WHERE movie_id=:id")
+        result = connection.execute(qry, id=id)
+        for item in result:
+            all.append({
+                'title': item[1],
+                'duration' : item[2],
+                'release_year' : item[3],
+                'category' : item[4],
+                'start_time' : item[7],
+                'end_time' : item[8],
+                'price' : item[9],
+                'poster' : item[5]
             })
     return jsonify(all)
 
@@ -642,3 +695,21 @@ def top_five():
             })
     return jsonify(all)
 
+@app.after_request
+def after_request_func(response):
+        origin = request.headers.get('Origin')
+        if request.method == 'OPTIONS':
+            response = make_response()
+            response.headers.add('Access-Control-Allow-Credentials', 'true')
+            response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+            response.headers.add('Access-Control-Allow-Headers', 'x-csrf-token')
+            response.headers.add('Access-Control-Allow-Methods',
+                                'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+            if origin:
+                response.headers.add('Access-Control-Allow-Origin', origin)
+        else:
+            response.headers.add('Access-Control-Allow-Credentials', 'true')
+            if origin:
+                response.headers.add('Access-Control-Allow-Origin', origin)
+
+        return response

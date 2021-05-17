@@ -7,16 +7,25 @@
     <title>Cinema</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <h1> Login </h1> <br><br>
-    <form id="loginForm" method="post">     
+<body >
+    <h1> Register </h1> <br><br>
+    <form id="registerForm" method="post">
+        <label for="name">Full name</label><br>
+        <input type="text" id="name" name="customer_name" placeholder="Enter full name"><br>
         <label for="email">Email</label><br>
         <input type="text" id="email" name="customer_email" placeholder="Enter email"><br>
         <label for="password">Password</label><br>
         <input type="text" id="password" name="customer_password" placeholder="Enter password"><br><br>
-      <input type="submit" value="Login"> <br><br><br>
+        <input type="submit" value="Register"><br><br><br>
     </form>
-        <script src="js/login.js"></script>
+        <p> If you have registered, <span><a href="login.html" style="text-decoration: none; color: white;"> login here.</a> </a>
+        </span></p>
+
+        <script src="js/register.js"></script>
         <script src="js/api.js"></script>
 </body>
+
+<script>
+
+</script>
 </html>

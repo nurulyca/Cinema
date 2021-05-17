@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;800&family=Poppins:wght@100;200;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="detail.css">
     <title>Cinema</title>
 </head>
 <body>
@@ -22,9 +22,6 @@
                     <li class="menu-list-item">Promotions</li>
                 </ul>
             </div>
-            <div class="register-button"> 
-                <a href="register.html" style="text-decoration: none; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Register</a> 
-            </div>
             <div>
                 <form> 
                     <div class="search" style="display: flex; justify-content: flex-end;margin-right: 100px;">
@@ -35,27 +32,28 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="content-container">
-            <div class="featured-content"
-            style="background: linear-gradient(to bottom, rgb(197, 163, 163), black); height: 200vw;">
-            <div style="display: flex;justify-content: space-between;">
-                <img class="featured-title" src="image/title.png" alt="">
-                <div class="featured-desc" style="align-self: center">
-                    <h1 class="featured-desc" style="text-align: right;">Check in.<br> Check out.<br> Book now!</h1>
-                </div>
-            </div>
-            <div class="movie-list-container">
-                <h2 class="movie-list-title">Now Playing</h2>
-                <div class="movie-list-wrapper">
-                    <div class="movie-list">
-                </div>
-                    </div>
-            </div>
-            </div>
+    <div class="movie-detail" style="display: flex;">
+        <div class="movie-list-container">
+            <h2 class="h2">NOW PLAYING</h2>
+        <div style="background-color:white; width: 200px;height: 200px;">
+            <img class="poster" alt=""/>
         </div>
+        </div>
+        <div style="background-color: white; width: 30vw;height: 200px;margin-top: 100px;margin-left: 100px;">
+            <div>
+            <h1 class="title"></h1> <br> <br>
+            <ul>
+                <li><b>Genre</b>: <span class="genre"></span></li>
+                <li><b>Duration</b>: <span class="duration"></span></li>
+                <li><b>Price</b>: <span class="price"></span></li>
+                <li><b>Release year</b>: <span class="release"></span></li>
+            </ul>
+        </div>
+        <div>
+        </div>
+        </div>
+
     </div>
+    <script src="js/detail.js"></script>
     <script src="js/api.js"></script>
-    <script src="js/main.js"></script>
-</body> 
-</html>
+    </body> 
