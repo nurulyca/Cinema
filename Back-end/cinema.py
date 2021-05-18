@@ -1,3 +1,4 @@
+from logging import error
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, make_response
@@ -177,6 +178,12 @@ def login_customer():
         return jsonify ({
             "message" : "Wrong email or password!"
         }), 401
+    try:
+        wall = Wallet.query.filter_by(customer_id = cust.customer_id).first_or_404()
+    except:
+        return jsonify ({
+            "message" : "Error!"
+        }), 401
 
     payload = {'customer_id' : cust.customer_id, 'customer_email' : cust.customer_email, 'is_admin': cust.is_admin}
     encoded_jwt = jwt.encode(payload, 'secret', algorithm="HS256")
@@ -186,7 +193,7 @@ def login_customer():
             'customer_id' : cust.customer_id,
             'name' : cust.customer_name,
             'email' : cust.customer_email,
-            'password' : cust.customer_password,
+            'wallet_id' : wall.wallet_id,
             'access_token' : encoded_jwt.decode('UTF-8')
             })
     else:
@@ -566,9 +573,8 @@ def top_up(id):
 @app.route('/buy_ticket/', methods=['POST'])
 def buy_ticket():
     data = request.get_json()
-
+    print(data)
     token = request.headers.get("access_token").encode('UTF-8')
-
     try:
         decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
     except jwt.exceptions.DecodeError:
@@ -640,20 +646,23 @@ def buy_ticket():
     with engine.connect() as connection:
         all = []
         qry = text("SELECT * FROM booking_item JOIN scheduled_movie USING (scheduled_movie_id) JOIN booking USING(booking_id) JOIN movie USING(movie_id) WHERE booking_id=:booking_id")
-        result = connection.execute(qry, booking_id=book.booking_id)
-        for item in result:
-            all.append({
-                'booking_id': item[1], 
-                'seat_id': item[4], 
-                'title': item[14],
-                'booking_status': item[11],
-                'start_time' : item[5],
-                'end_time' : item[6],
-                'auditorium_id' : item[8],
-                'total_price' : item[13],
-                'total_quantity' : item[12]
-            })
-    return jsonify(all)
+        try:      
+            result = connection.execute(qry, booking_id=book.booking_id)
+            for item in result:
+                all.append({
+                    'booking_id': item[1], 
+                    'seat_id': item[4], 
+                    'title': item[14],
+                    'booking_status': item[11],
+                    'start_time' : item[5],
+                    'end_time' : item[6],
+                    'auditorium_id' : item[8],
+                    'total_price' : item[13],
+                    'total_quantity' : item[12]
+                })
+            return jsonify(all)
+        except:
+            return "error"
 
 @app.route('/paid_seat/<id>')
 def paid_seat(id):
@@ -745,7 +754,7 @@ def after_request_func(response):
         if request.method == 'OPTIONS':
             response = make_response()
             response.headers.add('Access-Control-Allow-Credentials', 'true')
-            response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+            response.headers.add('Access-Control-Allow-Headers', 'Content-Type,access_token')
             response.headers.add('Access-Control-Allow-Headers', 'x-csrf-token')
             response.headers.add('Access-Control-Allow-Methods',
                                 'GET, POST, OPTIONS, PUT, PATCH, DELETE')

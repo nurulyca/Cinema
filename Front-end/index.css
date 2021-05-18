@@ -11,7 +11,7 @@ body{
 .navbar{
     width: 100%;
     height: 50px;
-    background-color: rgb(79, 18, 18);
+    background-color: rgb(30, 75, 74);
   }
   
   .navbar-container{
@@ -67,41 +67,64 @@ a {
 
 .featured-desc{
   width: 500px;
-  color: rgb(126, 24, 24);
+  color: rgb(255, 255, 255);
   margin: 30px 0;
   padding: 10px 20px;
   font-size: 20px;
-  font-style: oblique;
   font-weight: 400;
+  font-family: 'Monoton', cursive;
 }
 
 h1.featured-desc {
-  font-variant: small-caps;
-  font-size: 70px;
+  font-size: 60px;
   font-style: inherit;
   font-weight: bolder;
 }
 
+#about{
+  font-family: 'Poppins', sans-serif;
+  background-image: url(image/gretel.jpeg);
+  margin-left: -50px;
+  width: 104%;
+  height: 50vh;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  background-repeat: no-repeat;
+}
+
+.about-text {
+font-family:'Poppins', sans-serif;
+  margin-top: 100px;
+  width: 20%;
+  color: white;
+  text-align: left;
+}
+
+.about-text p{
+  font: 1.2rem;
+  color: rgb(227, 225, 225);
+  margin-left: -900px;
+  width: 900px;
+}
+
 h2 {
-  background-color: rgb(255, 255, 255);
-  width: 300px;
-  text-align: center;
-  color: rgb(0, 0, 0);
+  margin-top: 10px;
+  font-family:'Poppins', sans-serif;
+  font-weight: bolder;
   font-size: 30px;
-  font-style: bold;
+  margin-left: 30px;
+  color: rgb(255, 255, 255);
+  text-align: center;
   border-radius: 10px;
 }
 
 .movie-list-container{
   padding: 20px;
   margin-top: 50px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
-.movie-list-title {
-  color: white;
-  background: maroon;
-}
 
 .movie-list{
   display: flex;
@@ -174,6 +197,7 @@ h2 {
   bottom: 0px;
   left: 40%;
   transition: 1s all ease-in-out;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .search input[type=text] {
@@ -181,15 +205,16 @@ h2 {
   font-size: 17px;
   border: 1px solid grey;
   float: left;
-  width: 50%;
+  width: 80%;
   background: #f1f1f1;
+  
 }
 
 /* Style the submit button */
 .search button {
   float: left;
-  width: 70px;
-  padding: 10px;
+  width: 50px;
+  padding: 1px;
   background: rgb(54, 11, 11);
   color: white;
   font-size: 15px;
@@ -197,11 +222,7 @@ h2 {
   border-left: none; /* Prevent double borders */
   cursor: pointer;
   border-style: none;
-}
-
-.search button:hover {
-  background: goldenrod;
-  border-style: none;
+  border-radius: 5px;
 }
 
 /* Clear floats */
@@ -209,4 +230,13 @@ h2 {
   content: "";
   clear: both;
   display: table;
+}
+
+.button-logout {
+  font-family:'Montserrat', sans-serif;
+  border-style: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
 }

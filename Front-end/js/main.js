@@ -2,6 +2,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const search_bar = document.querySelector(".search_bar");
     const searchTitle = document.querySelector('input[name="searchname"]');
     const movieList  = document.querySelector('.movie-list');
+    const divRegister = document.querySelector(".register-button")
+    const registerLink = document.querySelector(".register-link")
+    let access_token = localStorage.getItem('access_token')
+
+    if(access_token) {
+        divRegister.innerHTML = ""
+        const buttonLogout = document.createElement('button')
+        buttonLogout.className = "button-logout"
+        buttonLogout.innerText = "Logout"
+        buttonLogout.onclick = () => {
+            localStorage.clear()
+            divRegister.innerHTML = ""
+            divRegister.append(registerLink) 
+        }
+        divRegister.append(buttonLogout)
+    }
     search_bar.onclick = e => {
         e.preventDefault()
         movieList.innerHTML = ""

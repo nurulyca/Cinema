@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() { 
-    console.log("load login")
     const loginForm = document.querySelector('#loginForm');
 
     loginForm.addEventListener('submit', e => {
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         login(json)
         .then(res => {
             localStorage.setItem('access_token', res.access_token)
+            localStorage.setItem('customer_data', JSON.stringify(res))
             console.log(res)
             window.location.href = "index.html"
         }).catch(err => {

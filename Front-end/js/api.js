@@ -31,6 +31,7 @@ function login(payload){
     console.log(payload)
     return fetch('http://localhost:5000/login_customer/', {
         method:"POST",
+        mode: "cors",
         headers: { 
             'Content-Type' : 'application/json'
           },
@@ -69,6 +70,20 @@ function getSchedules(id) {
 // get paid seats
 function getPaidSeats(id) {
     return fetch('http://localhost:5000/paid_seat/' + id)
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse)
+}
+
+// post ticket booking
+function buyTicket(payload, token){
+    return fetch('http://localhost:5000/buy_ticket/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'access_token': token
+        },
+        body: JSON.stringify(payload)
+    })
     .then(response => response.json())
     .then(jsonResponse => jsonResponse)
 }

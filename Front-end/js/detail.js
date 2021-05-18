@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else {
                             seatBox.onclick = e => {
                                 e.preventDefault()
-                                selectedSeat.push(seat.seat_id)
+                                selectedSeat.push("" + seat.seat_id)
                                 seatBox.className = "selected-seat-box"
                             }
                         }
@@ -67,7 +67,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
                     const buttonCheckOut = document.createElement('button');
                     buttonCheckOut.onclick = (e) => {
-                        console.log(selectedSeat)
+                        let customer_data = JSON.parse(localStorage.getItem('customer_data'))
+                        let access_token = localStorage.getItem('access_token')
+                        let payload = {
+                            scheduled_movie_id : item.scheduled_movie_id,
+                            wallet_id : "" + customer_data.wallet_id,
+                            array_seats: ["1", "2"]
+                        }
+
+                        // const data = new FormData();
+                        // data.append('scheduled_movie_id', item.scheduled_movie_id)
+                        // data.append('wallet_id', customer_data.wallet_id,)
+                        // data.append('array_seats', selectedSeat)
+                    
+                     
+                        buyTicket(payload, access_token)
+                        .then(success => {
+                            console.log(success)
+                        })
 
                    }
                    buttonCheckOut.innerText = "Check out";

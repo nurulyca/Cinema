@@ -1,4 +1,5 @@
-body {font-family: 'Roboto', sans-serif;
+body {
+    font-family: 'Montserrat', sans-serif;
     background-image: url('image/CINEMA_SEATS.jpg');
     background-size: 150%;
     background-repeat: no-repeat;
@@ -15,7 +16,7 @@ body {font-family: 'Roboto', sans-serif;
 
 
 input[type=text], input[type=password] {
-  width: 30%;
+  width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -37,18 +38,28 @@ button {
   cursor: pointer;
   width: 30%;
   border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 input[type=submit] {
-    background-color: maroon;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 30%;
-    font-size: 20px;
-    margin-left: 20px;
+  font-family: 'Montserrat', sans-serif;
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid rgb(210, 198, 198);
+  box-sizing: border-box;
+  margin-left: 20px;
+  border-radius: 10px;
+  background: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  }
+
+  input[type=submit]:hover {
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(100, 140, 139);
   }
 
 label {
@@ -57,7 +68,7 @@ label {
 
 p {
   text-align: center;
-  margin-top: 450px;
+  margin-top: 420px;
 }
 
 h1 {
