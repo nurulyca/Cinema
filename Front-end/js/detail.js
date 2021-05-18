@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                    }
                    buttonCheckOut.innerText = "Check out";
-                   buttonCheckOut.className = "btn btn-outline-danger"
+                   buttonCheckOut.className = "btn btn-outline-warning check-out"
                    seatDiv.append(buttonCheckOut)
                 })
                 })

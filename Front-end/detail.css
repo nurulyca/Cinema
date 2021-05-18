@@ -105,8 +105,6 @@ b {
     border-style: solid;
 }
 
-.btn.btn-outline-danger {
-    margin-left: 190px;
-    background-color: maroon;
-    color: white;
+.check-out {
+    margin-left: 180px;
 }
