@@ -26,7 +26,7 @@ function getListByTitle(title){
         .then(jsonResponse => jsonResponse)
 }
 
-
+// to login
 function login(payload){
     console.log(payload)
     return fetch('http://localhost:5000/login_customer/', {
@@ -39,6 +39,7 @@ function login(payload){
         .then(jsonResponse => jsonResponse)
 }
 
+// to register
 function registerCustomer(payload){
     console.log(payload)
     return fetch('http://localhost:5000/register_customer/', {
@@ -49,4 +50,25 @@ function registerCustomer(payload){
         body: payload })
         .then(response => response.json())
         .then(jsonResponse => jsonResponse)
+}
+
+// get all list seat
+function getListSeat(id) {
+    return fetch('http://localhost:5000/list_seat/' + id)
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse)
+}
+
+// get all schedules
+function getSchedules(id) {
+    return fetch('http://localhost:5000/get_schedules_by_movie_id/' + id)
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse)
+}
+
+// get paid seats
+function getPaidSeats(id) {
+    return fetch('http://localhost:5000/paid_seat/' + id)
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse)
 }

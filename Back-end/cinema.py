@@ -444,7 +444,9 @@ def get_list_movie(date):
                 'end_time' : item[8],
                 'price' : item[9],
                 'poster' : item[5],
-                'movie_id': item[0]
+                'scheduled_movie_id' : item[6],
+                'movie_id': item[0],
+                'auditorium_id' : item[10]
             })
     return jsonify(all)
 
@@ -485,6 +487,38 @@ def detail_movie(id):
                 'end_time' : item[8],
                 'price' : item[9],
                 'poster' : item[5]
+            })
+    return jsonify(all)
+
+@app.route('/get_schedules_by_movie_id/<id>')
+def get_schedules_by_movie_id(id):
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT * FROM scheduled_movie WHERE movie_id=:id")
+        result = connection.execute(qry, id=id)
+        for item in result:
+            all.append({
+                'scheduled_movie_id': item[0],
+                'start_time' : item[1],
+                'end_time' : item[2],
+                'price' : item[3],
+                'movie_id' : item[4],
+                'auditorium_id' : item[5]
+            })
+    return jsonify(all)
+
+@app.route('/list_seat/<id>')
+def get_list_seat(id):
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT * FROM seat WHERE auditorium_id=:id")
+        result = connection.execute(qry, id=id)
+        for item in result:
+            all.append({
+                'seat_id': item[0],
+                'row_seat_id': item[1],
+                'auditorium_id' : item[2],
+                'row_id' : item[3]
             })
     return jsonify(all)
 
@@ -619,6 +653,16 @@ def buy_ticket():
                 'total_price' : item[13],
                 'total_quantity' : item[12]
             })
+    return jsonify(all)
+
+@app.route('/paid_seat/<id>')
+def paid_seat(id):
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT seat_id FROM booking_item WHERE scheduled_movie_id=:id")
+        result = connection.execute(qry, id=id)
+        for item in result:
+            all.append(item[0])
     return jsonify(all)
 
 @app.route('/pay_ticket/', methods = ['POST'])
