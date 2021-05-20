@@ -205,13 +205,14 @@ def login_customer():
 def update_customer():
     data = request.get_json()
 
-    token = request.headers.get("access_token").encode('UTF-8')
-
+    token = request.headers.get("access_token")
+    
     try:
         decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
     except jwt.exceptions.DecodeError:
         return "Access token is invalid!"
-    
+    print(decoded_token)
+
     if not 'customer_id' in decoded_token and not 'customer_email' in decoded_token:
         return jsonify({
             'error' : 'Bad Request',
@@ -226,7 +227,7 @@ def update_customer():
             'message' : 'You can not be an admin.'
         }), 401
 
-    if 'customer_password' in data:
+    if 'customer_password' in data and len(data["customer_password"]) > 0:
         pw_hash = bcrypt.generate_password_hash(data.get('customer_password')).decode('UTF-8')
         cust.customer_password = pw_hash
 
@@ -234,6 +235,7 @@ def update_customer():
         if (re.search(regex, data['customer_email'])):
             cust.customer_email = data['customer_email']
         else:
+            print("a")
             return jsonify({
                 'error': 'Bad Request',
                 'message': 'Email is invalid!'
@@ -312,7 +314,7 @@ def update_movie(id):
         decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])
     except jwt.exceptions.DecodeError:
         return "Access token is invalid!"
-
+    
     if decoded_token['is_admin'] != True:
         return jsonify({
             'error': 'Unauthorized',

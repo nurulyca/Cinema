@@ -1,6 +1,5 @@
 * {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
   }
   
   body{
@@ -20,6 +19,7 @@
 .fas {
   margin-bottom: 100px;
 }
+
 
 .box {
   margin-left: 100px;
@@ -63,7 +63,7 @@ input {
   border-radius: 10px;
   background: none;
   outline: none;
-  color: white
+  color: rgb(0, 0, 0)
 }
 
 .submit-button {
@@ -81,6 +81,7 @@ input {
 input[type=email] {
   margin-left: 53px;
   border-color: rgb(29, 94, 94);
+  color: rgb(0, 0, 0);
 }
 
 input[type=text], input[type=password] {
@@ -96,6 +97,7 @@ input[type=text], input[type=password] {
   outline: none;
   color: white;
   border-color: rgb(29, 94, 94);
+  color: rgb(0, 0, 0);
 }
 
 button {
