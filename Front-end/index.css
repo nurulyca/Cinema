@@ -119,7 +119,7 @@ font-family:'Poppins', sans-serif;
 }
 
 h2 {
-  margin-top: 10px;
+  margin-top: 50px;
   font-family: 'Bungee Shade', cursive;
   font-weight: bolder;
   font-size: 30px;
@@ -134,71 +134,71 @@ h2 {
 
 
 .movie-list{
-  margin-top: 100px;
   display: flex;
   height: 300px;
+  align-items: center;
+  margin-top: 30px;
   flex-wrap: wrap;
 }
 
 .movie-list-item{
-  margin-right: 40px;
+  margin-right: 30px;
   margin-left: 20px;
-  position: relative;
   transition: all 1s ease-in-out;
+  margin: 20px;
+  position: relative;
+  background: none;
   
 }
 
 .movie-list-item:hover .movie-list-item-img{
   transform: scale(1.2);
-  margin: 0 30px;
+  margin: 0px 30px;
   opacity: 1;
-  margin-bottom: 100px;
 }
 
 .movie-list-item:hover .movie-list-item-title,
 .movie-list-item:hover .movie-list-item-desc,
 .movie-list-item:hover .movie-list-item-button{
   opacity: 1;
-  margin-bottom: 100px;
 }
 
 .movie-list-item-img{
   height: 270px;
   width: 200px;
-  margin-top: 40px;
+  margin-top: 40;
   transition: all 1s ease-in-out;
-  margin-bottom: 40px;
+  margin-bottom: 40;
 }
 
 .movie-list-item-title{
+  background-color: rgb(72, 24, 24);
   padding: 0 10px;
-  background-color: rgb(62, 15, 15);
   font-size: 20px;
   font-weight: bold;
   position: absolute;
   top: 10%;
   left: 50px;
-  color: whitesmoke;
+  color: rgb(255, 255, 255);
   transition: 1s all ease-in-out;
 }
 
 
 .movie-list-item-button{
   padding: 10px;
-  background-color:rgb(70, 11, 11);
-  color: rgb(255, 255, 255);
+  color: black;
+  background-color:goldenrod;
   font-weight: bolder;
-  border-radius: 10px;
+  border-radius: 20px;
   outline: none;
   border: none;
   cursor: pointer;
   position: absolute;
-  bottom: 70px;
+  bottom: 0px;
   left: 40%;
   transition: 1s all ease-in-out;
   font-family: 'Montserrat', sans-serif;
 }
-
 
 .search input[type=text] {
   padding: 10px;
@@ -239,7 +239,6 @@ h2 {
   color: white;
   cursor: pointer;
   font-size: 15px;
-  margin-right: 20px;
 }
 
 .register-button{
@@ -259,4 +258,16 @@ h2 {
   color: white;
   cursor: pointer;
   font-size: 15px;
+  margin-right: 40px;
+}
+
+.topup-button {
+  font-family:'Montserrat', sans-serif;
+  border-style: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 350px;
+  font-weight: bold;
 }
