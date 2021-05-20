@@ -94,3 +94,10 @@ function topFive(){
     .then(response => response.json())
     .then(jsonResponse => jsonResponse) 
 }
+
+// update personal info
+function updateInfo(){
+    return fetch('http://localhost:5000/update_customer/')
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse) 
+}
