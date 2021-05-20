@@ -87,3 +87,10 @@ function buyTicket(payload, token){
     .then(response => response.json())
     .then(jsonResponse => jsonResponse)
 }
+
+// get top 5 movies
+function topFive(){
+    return fetch('http://localhost:5000/top_five/')
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse) 
+}

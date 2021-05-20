@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('load');
+    // get the detail movie by movie_id
     let params = window.location.search.split("?")[1]
     params = params.split("=")
     let movie_id = params[1]
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         movieRelease.innerHTML = res[0].release_year
         console.log(res)
     })
+    // get movie schedule by movie_id
     getSchedules(movie_id)
     .then(res => {
         console.log(res, "<<schedules")
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else {
                             seatBox.onclick = e => {
                                 e.preventDefault()
-                                selectedSeat.push("" + seat.seat_id)
+                                selectedSeat.push(seat.seat_id)
                                 seatBox.className = "selected-seat-box"
                             }
                         }
@@ -75,15 +77,18 @@ document.addEventListener('DOMContentLoaded', function() {
                             array_seats: ["1", "2"]
                         }
 
-                        // const data = new FormData();
-                        // data.append('scheduled_movie_id', item.scheduled_movie_id)
-                        // data.append('wallet_id', customer_data.wallet_id,)
-                        // data.append('array_seats', selectedSeat)
-                    
+                        const data = new FormData();
+                        data.append('scheduled_movie_id', item.scheduled_movie_id)
+                        data.append('wallet_id', customer_data.wallet_id,)
+                        data.append('array_seats', selectedSeat)
+                        let json = Object.fromEntries(data)
                      
-                        buyTicket(payload, access_token)
+                        buyTicket(json, access_token)
                         .then(success => {
                             console.log(success)
+                            window.location.reload()
+                        }).catch(err => {
+                            console.log(err)
                         })
 
                    }

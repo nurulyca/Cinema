@@ -10,10 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(res => {
             localStorage.setItem('access_token', res.access_token)
             localStorage.setItem('customer_data', JSON.stringify(res))
-            console.log(res)
-            window.location.href = "index.html"
+            console.log("res", res)
+            if(!res.message) {
+                window.location.href = "index.html"
+            }else {
+                alert(res.message)
+            }
         }).catch(err => {
-            console.log(err)
+            console.log("err", err)
         })
     })
 })

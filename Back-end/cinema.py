@@ -573,6 +573,8 @@ def top_up(id):
 @app.route('/buy_ticket/', methods=['POST'])
 def buy_ticket():
     data = request.get_json()
+    if type(data["array_seats"]) == str:
+        data["array_seats"] = data["array_seats"].split(",")
     print(data)
     token = request.headers.get("access_token").encode('UTF-8')
     try:
@@ -602,9 +604,9 @@ def buy_ticket():
         schedule = ScheduledMovie.query.filter_by(scheduled_movie_id=data['scheduled_movie_id']).first_or_404()
     except:
         return "Movie within the ID does not exist"
-
+    seats = tuple(data['array_seats']) if len(data['array_seats']) > 1 else '({})'.format(data['array_seats'][0])
     with engine.connect() as connection:
-        qry = text("SELECT * FROM booking_item WHERE seat_id IN {} and scheduled_movie_id=:id".format(tuple(data['array_seats'])))
+        qry = text("SELECT * FROM booking_item WHERE seat_id IN {} and scheduled_movie_id=:id".format(seats))
         result = connection.execute(qry, id=data["scheduled_movie_id"])
         if len(list(result)) > 0:
             return "The chosen seat is unavailable."
@@ -629,7 +631,7 @@ def buy_ticket():
         except:
             return "Your chosen seat is unavailable."
     else:
-        return "Saldo is not sufficient, top up first!"
+        return jsonify({'message': "Saldo is not sufficient, top up first!"})
 
     for seat_id in data["array_seats"]:
         book_item = BookingItem(
@@ -738,13 +740,14 @@ def pay_ticket():
 def top_five():
     all = []
     with engine.connect() as connection:
-        qry = text("SELECT movie.movie_id, movie.movie_name, COUNT(booking_item.booking_item_id) AS total FROM booking_item INNER JOIN booking USING(booking_id) INNER JOIN scheduled_movie ON booking_item.scheduled_movie_id = scheduled_movie.scheduled_movie_id INNER JOIN movie USING (movie_id) WHERE booking_status = 'Paid' GROUP BY movie.movie_id ORDER BY total desc limit 5")
+        qry = text("SELECT movie.movie_id, movie.movie_name, movie.movie_poster, COUNT(booking_item.booking_item_id) AS total FROM booking_item INNER JOIN booking USING(booking_id) INNER JOIN scheduled_movie ON booking_item.scheduled_movie_id = scheduled_movie.scheduled_movie_id INNER JOIN movie USING (movie_id) WHERE booking_status = 'Paid' GROUP BY movie.movie_id ORDER BY total desc limit 5")
         result = connection.execute(qry)
         for item in result:
             all.append({
                 'movie_id': item[0],
-                'title' : item[1], 
-                'sold' : item[2]
+                'title' : item[1],
+                'movie_poster' : item[2],
+                'sold' : item[3]
             })
     return jsonify(all)
 

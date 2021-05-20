@@ -32,7 +32,7 @@ body{
   .logo {
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
-    color: whitesmoke;
+    color: rgb(255, 255, 255);
   }
   
   .menu-container{ 
@@ -46,6 +46,9 @@ body{
 
   .menu-list-item{
     margin-right: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family:  'Poppins', sans-serif;
   }
   
   
@@ -81,6 +84,13 @@ h1.featured-desc {
   font-weight: bolder;
 }
 
+h2.featured-desc {
+  margin-top: -55px;
+  font-size: 60px;
+  font-style: inherit;
+  font-weight: bolder;
+}
+
 #about{
   font-family: 'Poppins', sans-serif;
   background-image: url(image/gretel.jpeg);
@@ -110,13 +120,11 @@ font-family:'Poppins', sans-serif;
 
 h2 {
   margin-top: 10px;
-  font-family:'Poppins', sans-serif;
+  font-family: 'Bungee Shade', cursive;
   font-weight: bolder;
   font-size: 30px;
-  margin-left: 30px;
-  color: rgb(255, 255, 255);
+  color: goldenrod;
   text-align: center;
-  border-radius: 10px;
 }
 
 .movie-list-container{
@@ -129,7 +137,6 @@ h2 {
 .movie-list{
   display: flex;
   height: 300px;
-  align-items: center;
   margin-top: 30px;
   flex-wrap: wrap;
 }
@@ -186,10 +193,10 @@ h2 {
 
 .movie-list-item-button{
   padding: 10px;
-  background-color: goldenrod;
-  color: black;
+  background-color:rgb(70, 11, 11);
+  color: rgb(255, 255, 255);
   font-weight: bolder;
-  border-radius: 10px;
+  border-radius: 4px;
   outline: none;
   border: none;
   cursor: pointer;
@@ -199,6 +206,7 @@ h2 {
   transition: 1s all ease-in-out;
   font-family: 'Montserrat', sans-serif;
 }
+
 
 .search input[type=text] {
   padding: 10px;
@@ -215,7 +223,7 @@ h2 {
   float: left;
   width: 50px;
   padding: 1px;
-  background: rgb(54, 11, 11);
+  background: rgb(0, 0, 0);
   color: white;
   font-size: 15px;
   border: 1px solid grey;
@@ -233,6 +241,26 @@ h2 {
 }
 
 .button-logout {
+  font-family:'Montserrat', sans-serif;
+  border-style: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 20px;
+}
+
+.register-button{
+  font-family:'Montserrat', sans-serif;
+  border-style: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 20px;
+}
+
+.profile-button {
   font-family:'Montserrat', sans-serif;
   border-style: none;
   background: none;

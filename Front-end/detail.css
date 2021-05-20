@@ -2,12 +2,12 @@
     font-family: 'Poppins', sans-serif;
 }
 
-h2 {
+.opening {
     margin-top: 10px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
-    font-size: 10px;
-    margin-left: 40px;
+    font-size: 30px;
+    margin-left: 100px;
     color: goldenrod;
     background: none;
     border: goldenrod;
@@ -32,9 +32,13 @@ b {
     padding-right: 1em;
   }
 
+.movie-detail {
+    margin-left: 100px;
+}
+
 .title {
     margin-left: 40px;
-    margin-top: 40px;
+    margin-top: 10px;
     font-weight: bolder;
     color: maroon;
     font-size: 35px;
@@ -43,7 +47,7 @@ b {
 
 .poster {
     margin-top: 30px;
-    margin-left: 40px;
+    margin-left: 80px;
 }
 
 .search input[type=text] {
@@ -79,11 +83,6 @@ b {
     display: table;
   }
 
-  .title {
-      
-  }
-
-
   div.card {
     margin-left: 45px;
     margin-top: 50px;
@@ -117,4 +116,5 @@ b {
 .check-out {
     margin-left: 200px;
     margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
 }
