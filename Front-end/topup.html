@@ -9,9 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;800&family=Poppins:wght@100;200;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
-    
     <div class="container">
         <div class="logo-container">
             <a href="index.html" style="text-decoration: none;"><h1 class="logo">cinemas</h1></a> 
@@ -20,32 +20,73 @@
             <p class="top-up">Cinemaspay.</p>
             <p class="amount"><i class="fa fa-money" style="font-size:36px"></i>Top Up Amount (Rp)</p>
         </div>
+    </div>
+    <div>
         <div class="service-box">
             <div class="service" id="service1">
-                <i class="fa fa-money" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true" id="mon50"></i>
                 <h3>50.000</h3=>
             </div>
             <div class="service" id="service2">
-                <i class="fa fa-money" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true" id="mon100"></i>
                 <h3>100.000</h3>
             </div>
             <div class="service" id="service3">
-                <i class="fa fa-money" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true" id="mon150"></i>
                 <h3>150.000</h3>
             </div>
             <div class="service" id="service4">
-                <i class="fa fa-money" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true" id="mon200"></i>
                 <h3>200.000</h3>
             </div>
             <div class="service" id="service5">
-                <i class="fa fa-money" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true" id="mon250"></i>
                 <h3>250.000</h3>
             </div>
             <div class="service" id="service6">
-                <i class="fa fa-money" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true" id="mon300"></i>
                 <h3>300.000</h3>
             </div>
         </div>
-    </div>
+    </div> <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8 login-box">
+                <div class="col-lg-12 login-key">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </div>
+                <div class="col-lg-12 login-title">
+                    ADMIN LOGIN
+                </div>
+
+                <div class="col-lg-12 login-form">
+                    <div class="col-lg-12 login-form">
+                        <form id="loginAdmin">
+                            <div class="form-group">
+                                <label class="form-control-label">EMAIL</label>
+                                <input type="text" class="form-control email" name="emailadmin">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">PASSWORD</label>
+                                <input type="password" class="form-control password" name="passwordadmin" i>
+                            </div>
+
+                            <div class="col-lg-12 loginbttm">
+                                <div class="col-lg-6 login-btm login-text">
+                                    <!-- Error Message -->
+                                </div>
+                                <div class="col-lg-6 login-btm login-button">
+                                    <button type="submit" class="btn btn-outline-primary login">LOGIN</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-2"></div>
+            </div>
+        </div>
+    <script src="js/api.js"></script>
+    <script src="js/topup.js"></script>
 </body>
 </html>

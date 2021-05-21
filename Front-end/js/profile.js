@@ -46,7 +46,7 @@ updateForm.addEventListener('submit', (e) => {
   .then(res => res.json())
   .then(jsonRes => {
     console.log(jsonRes)
-    localStorage.setItem('customer_data', JSON.stringify(jsonRes))
+    localStorage.setItem('customer_data', JSON.strin)
     window.location.reload()
   })
 

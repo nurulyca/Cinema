@@ -101,3 +101,14 @@ function updateInfo(){
     .then(response => response.json())
     .then(jsonResponse => jsonResponse) 
 }
+
+function topUp(id){
+    return fetch('http://localhost:5000/top_up/' + id + '/', {
+        method:"POST",
+        headers: { 
+            'Content-Type' : 'application/json'
+          },
+        body: payload})
+        .then(response => response.json())
+        .then(jsonResponse => jsonResponse)
+}
