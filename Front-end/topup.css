@@ -12,6 +12,7 @@
 .top-up {
   margin-top: 50px;
   font-size: 30px;
+  font-family: 'Roboto', sans-serif;
 }
 
 body{
@@ -38,7 +39,8 @@ body{
   
 
 .amount{
-    margin-bottom: 100px;
+    margin-bottom: 140px;
+    margin-top: -20px;
 }
 
 .fa {
@@ -102,12 +104,10 @@ body{
   font-size: 80px;
   line-height: 100px;
   background: -webkit-linear-gradient(#27EF9F, #0DB8DE);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .login-title {
-  margin-top: -50px;
   text-align: center;
   font-size: 30px;
   letter-spacing: 2px;

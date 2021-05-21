@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;800&family=Poppins:wght@100;200;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -12,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Montserrat:wght@300;500&family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Codystar&family=Monoton&family=Montserrat:wght@300;500&family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Codystar&family=Monoton&family=Montserrat:wght@300;500&family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap" rel="stylesheet">
     <title>Cinema</title>
 </head>
 <body>
@@ -42,14 +45,47 @@
             </div>
         </div>
     </div>
-    <header id="about" role="banner">
-        <div class="about-image">
-        </div>
+    <div id="about">
+        <div class="about-image"></div>
         <div class="about-text">
-            <p class="about-text-title" style="font-size: 40px; color: rgb(255, 255, 255); font-weight: bold;">Gretel and Hansel</p>
-            <p>A long time ago in a distant fairy tale countryside, a young girl leads her little brother into a dark wood in desperate search of food and work, only to stumble upon a nexus of terrifying evil.</p>
+            <h1 class="heading">Upcoming</h1>
+            <h2 class="heading">Movie</h2>
         </div>
-    </header>
+        <div>
+            <p class="about-text-title">Gretel and Hansel</p>
+            <p class="about-text-desc">A long time ago in a distant fairy tale countryside, a young girl leads her little brother into a dark wood in desperate search of food and work, only to stumble upon a nexus of terrifying evil.</p>
+        </div>
+    </div>
+    <div class="slideshow-container">
+    <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="image/looper.jpeg" style="width:100%">
+        <div class="text"></div>
+      </div>
+      
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="image/sanandreas.jpeg" style="width:100%">
+        <div class="text"></div>
+      </div>
+      
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="image/interstellar.jpeg" style="width:100%">
+        <div class="text"></div>
+      </div>
+
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="image/girl.jpeg" style="width:100%">
+        <div class="text"></div>
+      </div>
+      <div style="text-align:center">
+        <span class="dot"></span> 
+        <span class="dot"></span> 
+        <span class="dot"></span> 
+      </div>
+      </div>
     <div class="container">
         <div class="content-container">
             <div class="featured-content"
@@ -61,6 +97,7 @@
                     <h2 class="featured-desc" style="text-align: right; color: burlywood;">Watch now!</h2>
                 </div>
             </div>
+            
             <div class="movie-list-container">
                 <h2>Now Playing</h2>
                 <div class="movie-list-wrapper">
@@ -71,8 +108,24 @@
             </div>
         </div>
     </div>
-    
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        var slideIndex = 0;
+        showSlides();
+        
+        function showSlides() {
+          var slides = document.getElementsByClassName("mySlides");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {
+              slideIndex = 1
+            }    
+          slides[slideIndex-1].style.display = "block";  
+          setTimeout(showSlides, 5000); // Change image every 2 seconds
+        }
+    </script>
 </body> 
 </html>
