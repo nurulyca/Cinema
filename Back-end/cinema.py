@@ -178,17 +178,19 @@ def login_customer():
         return jsonify ({
             "message" : "Wrong email or password!"
         }), 401
-    try:
-        wall = Wallet.query.filter_by(customer_id = cust.customer_id).first_or_404()
-    except:
-        return jsonify ({
-            "message" : "Error!"
-        }), 401
+    
+    if not cust.is_admin :
+        try:
+            wall = Wallet.query.filter_by(customer_id = cust.customer_id).first_or_404()
+        except:
+            return jsonify ({
+                "message" : "Error!"
+            }), 401
 
     payload = {'customer_id' : cust.customer_id, 'customer_email' : cust.customer_email, 'is_admin': cust.is_admin}
     encoded_jwt = jwt.encode(payload, 'secret', algorithm="HS256")
 
-    if bcrypt.check_password_hash(cust.customer_password, data["customer_password"]):
+    if not cust.is_admin and bcrypt.check_password_hash(cust.customer_password, data["customer_password"]):
         return jsonify ({
             'customer_id' : cust.customer_id,
             'name' : cust.customer_name,
@@ -196,10 +198,19 @@ def login_customer():
             'wallet_id' : wall.wallet_id,
             'access_token' : encoded_jwt.decode('UTF-8')
             })
+    elif bcrypt.check_password_hash(cust.customer_password, data["customer_password"]):
+        return jsonify ({
+            'customer_id' : cust.customer_id,
+            'name' : cust.customer_name,
+            'email' : cust.customer_email,
+            'access_token' : encoded_jwt.decode('UTF-8')
+            })
     else:
         return jsonify ({
             "message" : "Wrong email or password!"
         }), 401
+    
+
 
 @app.route('/update_customer/', methods = ['PUT'])
 def update_customer():
@@ -572,12 +583,26 @@ def top_up(id):
         'transaction_status' : wallTrans.transaction_status
     }, 201
 
+@app.route('/saldo_left/<id>')
+def saldo_left(id):
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT * FROM wallet WHERE wallet_id=:id")
+        result = connection.execute(qry, id=id)
+        for item in result:
+            all.append({
+                'wallet_id': item[0],
+                'total_amount': item[1],
+                'customer_id' : item[2]
+            })
+    return jsonify(all)
+
 @app.route('/buy_ticket/', methods=['POST'])
 def buy_ticket():
     data = request.get_json()
     if type(data["array_seats"]) == str:
         data["array_seats"] = data["array_seats"].split(",")
-    print(data)
+    
     token = request.headers.get("access_token").encode('UTF-8')
     try:
         decoded_token = jwt.decode(token, 'secret', algorithm=["HS256"])

@@ -102,13 +102,35 @@ function updateInfo(){
     .then(jsonResponse => jsonResponse) 
 }
 
-function topUp(id){
+// to get the amount saldo left
+function saldoLeft(id){
+    return fetch('http://localhost:5000/saldo_left/' + id)
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse)
+}
+
+// to top up
+function topUp(payload, token, id){
     return fetch('http://localhost:5000/top_up/' + id + '/', {
-        method:"POST",
+        method:"PUT",
         headers: { 
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'access_token' : token
           },
         body: payload})
+        .then(response => response.json())
+        .then(jsonResponse => jsonResponse)
+}
+
+// login Admin
+function loginAdmin(payload){
+    return fetch('http://localhost:5000/login_customer/', {
+        method:"POST",
+        mode: "cors",
+        headers: { 
+            'Content-Type' : 'application/json',
+          },
+        body: payload })
         .then(response => response.json())
         .then(jsonResponse => jsonResponse)
 }

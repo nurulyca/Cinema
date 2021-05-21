@@ -18,7 +18,8 @@ p {
     margin-top: 10px;
 }
 
-ul {
+.information {
+    margin-top: 20px;
     list-style: none;
     display: table;
   }
@@ -37,8 +38,8 @@ b {
 }
 
 .title {
+  margin-top: 100px;
     margin-left: 40px;
-    margin-top: 10px;
     font-weight: bolder;
     color: maroon;
     font-size: 35px;

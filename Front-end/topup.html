@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Codystar&family=Monoton&family=Montserrat:wght@300;500&family=Varela+Round&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -17,8 +18,13 @@
             <a href="index.html" style="text-decoration: none;"><h1 class="logo">cinemas</h1></a> 
         </div>
         <div class="currency">
-            <p class="top-up">Cinemaspay.</p>
-            <p class="amount"><i class="fa fa-money" style="font-size:36px"></i>Top Up Amount (Rp)</p>
+            <p class="top-up">CINEMASPAY</p>
+            <div>
+            <p class="left-amount"></p><br><br>
+            </div>
+            <div style="background-color: transparent;">
+            <p class="amount"><i class="fa fa-money" style="font-size:36px;"></i>Top up amount (IDR)</p>
+            </div>
         </div>
     </div>
     <div>
@@ -53,30 +59,29 @@
         <div class="row">
             <div class="col-lg-3 col-md-2"></div>
             <div class="col-lg-6 col-md-8 login-box">
+                <form id="loginForm">
                 <div class="col-lg-12 login-form">
                     <div class="col-lg-12 login-form">
-                        <form id="loginAdmin">
                             <div class="col-lg-12 login-title">
                                 ADMIN LOGIN
                             </div> 
                             <div class="form-group">
                                 <label class="form-control-label">EMAIL</label>
-                                <input type="text" class="form-control email" name="emailadmin">
+                                <input type="text" class="form-control email" name="customer_email">
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">PASSWORD</label>
-                                <input type="password" class="form-control password" name="passwordadmin" i>
+                                <input type="password" class="form-control password" name="customer_password" i>
                             </div>
 
                             <div class="col-lg-12 loginbttm">
                                 <div class="col-lg-6 login-btm login-text">
-                                    <!-- Error Message -->
                                 </div>
                                 <div class="col-lg-6 login-btm login-button">
                                     <button type="submit" class="btn btn-outline-primary">LOGIN</button>
                                 </div>
                             </div>
-                        </form>
+                    </form>
                 </div>
             </div>
             <div class="col-lg-3 col-md-2"></div>
