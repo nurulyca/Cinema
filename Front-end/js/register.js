@@ -10,8 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
         registerCustomer(json)
         .then(res => {
             console.log(res)
+            if(!res.message) {
+                alert("Registered successfully!")
+                window.location.href = "login.html"
+            }else {
+                alert(res.message)
+            }
         }).catch(err => {
-            console.log(err)
+            console.log("err", err)
         })
     })
 })

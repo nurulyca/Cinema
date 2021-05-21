@@ -84,9 +84,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         let json = Object.fromEntries(data)
                      
                         buyTicket(json, access_token)
-                        .then(success => {
-                            console.log(success)
-                            window.location.reload()
+                        .then(result => {
+                            console.log(result)
+                            if(!result.message) {
+                                window.location.reload()
+                            } else {
+                                alert(result.message)
+                                window.location.href = "topup.html"
+                            }
                         }).catch(err => {
                             console.log(err)
                         })
