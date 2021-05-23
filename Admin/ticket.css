@@ -1,0 +1,42 @@
+body{
+	margin: 0;
+	padding: 0;
+	font-family: 'Poppins', sans-serif;
+}
+
+.movie_card {
+    color: #fff;
+    height: 390px;
+    margin: 50px auto;
+    display: flex;
+    max-width: 50%;
+    background: linear-gradient(#373B44, #521409);
+    box-shadow: 0 0 40px rgba(0,0,0,0.3);
+    }
+
+
+.left {
+    width: 80%;
+}
+
+.datails {
+    width: 90%;
+    padding: 30px;
+    margin-top: -25px;
+}
+.c_right img {
+    height: 390px;
+    width:100%;
+}
+.head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rated, .year, .genre, .time {
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 15px;
+}

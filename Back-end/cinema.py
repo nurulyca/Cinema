@@ -45,6 +45,7 @@ class Movie(db.Model):
     movie_duration = db.Column(db.Integer, nullable=False)
     movie_category = db.Column(db.String, nullable=False)
     movie_published_year = db.Column(db.Integer, nullable=False)
+    movie_poster = db.Column(db.String, nullable=False)
 
 class ScheduledMovie(db.Model):
     scheduled_movie_id = db.Column(db.Integer, primary_key=True, index=True)
@@ -303,7 +304,8 @@ def create_movie():
         movie_name = data['movie_name'],
         movie_duration = data['movie_duration'],
         movie_published_year = data['movie_published_year'],
-        movie_category = data['movie_category']
+        movie_category = data['movie_category'],
+        movie_poster = data['movie_poster']
         )
     db.session.add(mov)
     db.session.commit()

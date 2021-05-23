@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const toggleEdit = document.getElementById("toggle-edit");
+    const updateTitle = document.querySelector('input[name="updatetitle"]');
+    const updateGenre = document.querySelector('input[name="updategenre"]');
+    const updateDuration = document.querySelector('input[name="updateduration"]');
+    const updatePrice = document.querySelector('input[name="updateprice"]');
+    const updateRelease = document.querySelector('input[name="updateyear"]');
     console.log('load');
     // get the detail movie by movie_id
     let params = window.location.search.split("?")[1]
     params = params.split("=")
-    let movie_id = params[1]
-    let moviePoster = ""
+    let movie_id = params[1];
+    let moviePoster = "";
     getDetailMovie(movie_id)
     .then(res => {
         const posterImg = document.querySelector(".poster")
@@ -23,6 +29,46 @@ document.addEventListener('DOMContentLoaded', function() {
         movieRelease.innerHTML = res[0].release_year
         console.log(res)
     })
+
+    toggleEdit.onclick = () => {
+        const detailMovie = JSON.parse(localStorage.getItem("detail_movie"))
+        updateTitle.value = detailMovie.title
+        updateGenre.value = detailMovie.category
+        updatePrice.value = detailMovie.price
+        updateRelease.value = detailMovie.release_year
+        updateDuration.value = detailMovie.duration
+        var x = document.getElementById("updateMovie")
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+    }
+
+    const updateForm = document.querySelector('#updateMovie');
+    updateForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const data = new FormData(updateForm);
+        const objectData = Object.fromEntries(data)
+        const payload = {
+            movie_name : objectData.updatetitle,
+            movie_duration : objectData.updateduration,
+            movie_published_year : objectData.updateyear,
+            movie_category : objectData.updategenre
+        }
+
+        console.log(objectData)
+        console.log(payload)
+        const json = JSON.stringify(payload);
+        const token = localStorage.getItem('access_token_admin')
+        updateMovie(json, token, movie_id)
+        .then(res => {
+            console.log(res)
+            window.location.reload()
+        })
+    })
+
     // get movie schedule by movie_id
     getSchedules(movie_id)
     .then(res => {
@@ -156,4 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         });
     })
+
+
+    
 })

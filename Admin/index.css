@@ -204,6 +204,75 @@ h2 {
   text-align: center;
 }
 
+#toggle-add {
+    margin-top: 30px;
+    margin-left: 550px;
+    color:rgb(199, 146, 13);
+    font-size: xx-large;
+    cursor: pointer;
+}
+
+.add-box {
+    margin-top: 30px;
+  }
+  
+  .add-title {
+    margin-left: 350px;
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    font-size: 25px
+  }
+  
+  .form-group {
+    margin-top: 30px;
+    margin: 10px;
+    color: rgb(199, 146, 13);
+    margin-left: 350px;
+  }
+  
+  .button-add {
+    margin-left: 680px;
+    padding: 15px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(199, 146, 13);
+    cursor: pointer;
+    border-style: none;
+    color: rgb(226, 228, 228);
+    font-size: 15px;
+  }
+  
+  #addMovie {
+    margin-top: 30px;
+  }
+  
+  input {
+      margin-left: 30px;
+      width: 300px;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 20px;
+  }
+
+  input.add-moviename{
+      margin-left: 100px;
+  }
+
+  input.add-genre{
+      margin-left: 85px;
+  }
+
+  input.add-duration{
+      margin-left: 65px;
+  }
+
+  input.add-price{
+      margin-left: 95px;
+  }
+
+  input.add-poster{
+      margin-left: 85px;
+  }
+
 .movie-list-container{
   padding: 20px;
   font-family: 'Poppins', sans-serif;

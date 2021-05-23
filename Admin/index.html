@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Codystar&family=Monoton&family=Montserrat:wght@300;500&family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Satisfy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap" rel="stylesheet">
-    <title>Cinema</title>
+    <title>Admin</title>
 </head>
 <body>
     <div class="navbar">
@@ -89,7 +89,7 @@
     <div class="container">
         <div class="content-container">
             <div class="featured-content"
-            style="background: linear-gradient(to bottom, rgb(39, 66, 66), rgb(255, 255, 255)); height: 150vw;">
+            style="background: linear-gradient(to bottom, rgb(39, 66, 66), rgb(38, 38, 38)); height: 200vw;">
             <div style="display: flex;justify-content: space-between;">
                 <img class="featured-title" src="image/title.png" alt="">
                 <div class="featured-desc" style="align-self: center">
@@ -97,9 +97,57 @@
                     <h2 class="featured-desc" style="text-align: right; color: burlywood;">Watch now!</h2>
                 </div>
             </div>
-            
             <div class="movie-list-container">
                 <h2>Now Playing</h2>
+                <i class="fas fa-plus-circle" id="toggle-add"></i>
+                <div>
+                    <div class="container-add">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-2"></div>
+                            <div class="col-lg-6 col-md-8 add-box">
+                                <form id="addMovie">
+                                <div class="col-lg-12 add-form">
+                                    <div class="col-lg-12 add-form">
+                                            <div class="col-lg-12 add-title">
+                                                Add Movie
+                                            </div> 
+                                            <div class="form-group">
+                                                <label class="form-control-label">Title</label>
+                                                <input type="text" class="form-control add-moviename" name="addtitle">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label">Genre</label>
+                                                <input type="text" class="form-control add-genre" name="addgenre">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label">Release Year</label>
+                                                <input type="text" class="form-control add-year" name="addyear">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label">Duration</label>
+                                                <input type="text" class="form-control add-duration" name="addduration">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label">Price</label>
+                                                <input type="text" class="form-control add-price" name="addprice">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label">Poster</label>
+                                                <input type="text" class="form-control add-poster" name="addposter">
+                                            </div>
+                                            <div class="col-lg-12 loginbttm">
+                                                <div class="col-lg-6 login-btm add-text">
+                                                </div>
+                                                <div class="col-lg-6 login-btm add-button">
+                                                    <button type="submit" class="btn btn-outline-warning button-add">Add to list</button>
+                                                </div>
+                                        </div>
+                                </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-2"></div>
+                        </div>
+                </div>
                 <div class="movie-list-wrapper">
                     <div class="movie-list">
                     </div>

@@ -1,0 +1,105 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-image: url('image/CINEMA_SEATS.jpg');
+    background-size: 150%;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100%;
+    color: cornsilk;
+    object-fit: cover;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    ;
+}
+
+#email {
+  background-color: none;
+}
+
+input[type=text], input[type=password] {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid rgb(210, 198, 198);
+  box-sizing: border-box;
+  margin-left: 20px;
+  border-radius: 10px;
+  background: none;
+  outline: none;
+  color: white
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+input[type=submit] {
+  font-family: 'Montserrat', sans-serif;
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid rgb(210, 198, 198);
+  box-sizing: border-box;
+  margin-left: 20px;
+  border-radius: 10px;
+  background: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  }
+
+  input[type=submit]:hover {
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(100, 140, 139);
+  }
+
+label {
+  margin-left: 20px;
+}
+
+p {
+  text-align: center;
+  margin-top: 420px;
+}
+
+h1 {
+  color: white;
+  margin-left: 20px;
+  text-align: center;
+  margin-top: 60px;
+}
+
+#registerForm {
+  color: white;
+}
+
+#loginForm, #registerForm {
+  margin-top: 60px;
+  color: white;
+  width: 500px;
+  padding: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(0, 0, 0, 0.4);
+  text-align: center;
+  position:absolute;
+}
+
+#loginForm.h1, #registerForm.h1 {
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+}
