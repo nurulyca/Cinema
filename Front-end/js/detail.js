@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         movieRelease.innerHTML = res[0].release_year
         console.log(res)
     })
+
     // get movie schedule by movie_id
     getSchedules(movie_id)
     .then(res => {
@@ -42,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
             pStartTime.innerText = "Start Time: " + startTime[1]
             div.append(pStartTime)
             const buttonBook = document.createElement('button')
-            buttonBook.onclick = e => {    
+            buttonBook.onclick = e => {   
+                // get seat list by auditorium ID 
                 getListSeat(item.auditorium_id)
                 .then(listSeat => {
                     const seatDiv = document.querySelector('.seats')
@@ -53,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log(paidSeats, "PAID")
                     let selectedSeat = [];
                     listSeat.forEach(seat => {
-                        
                         const seatBox = document.createElement('div')
                         seatBox.className = "seat-box"
                         seatBox.innerText = seat.row_id + seat.row_seat_id
@@ -90,7 +91,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(result => {
                             console.log(result)
                             if(!result.message) {
-                                localStorage.setItem("booking_item", JSON.stringify(result[0]))
+                                const booked = localStorage.getItem("booking_item");
+                                if (booked) {
+                                    arrBook = JSON.parse(booked)
+                                    arrBook.push(result[0]);
+                                    localStorage.setItem("booking_item", JSON.stringify(arrBook))
+                                } else {
+                                    const listBook = [];
+                                    listBook.push(result[0]);
+                                    localStorage.setItem("booking_item", JSON.stringify(listBook))
+                                }
                                 window.location.reload()
                             } else {
                                 const alertDiv = document.createElement('div')
@@ -98,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 alertDiv.role = "alert"
                                 alertDiv.innerText = result.message
                                 div.append(alertDiv)
-                                // window.location.href = "topup.html"
                             }
                         }).catch(err => {
                             console.log(err)
@@ -117,43 +126,45 @@ document.addEventListener('DOMContentLoaded', function() {
             div.append(buttonBook)
             scheduleDiv.append(div)
 
-            const bookingItem = JSON.parse(localStorage.getItem("booking_item"));
-            const movieData = JSON.parse(localStorage.getItem("detail_movie"));
-            if (bookingItem) {
-                const divTicket = document.createElement("div");
-                divTicket.style = "width: 18rem; border: solid"
-                divTicket.className = "card";
-                const imgTicket = document.createElement("img");
-                imgTicket.src = movieData.poster
-                imgTicket.className = "card-img-top"
-                const divBody = document.createElement('div')
-                divBody.className = "card-body"
-                const ticket = document.createElement('h5')
-                ticket.className = "card-title"
-                ticket.innerText = "Cinemas Ticket"
-                divBody.append(ticket)
-                const title = document.createElement('p')
-                title.className = "card-text"
-                title.innerText = movieData.title;
-                divBody.append(title)
-                const seat = document.createElement('p')
-                seat.className = "card-text"
-                seat.innerText = bookingItem.seat_id;
-                divBody.append(seat)
-                const time = document.createElement('p')
-                time.className = "card-text"
-                time.innerText = bookingItem.start_time;
-                divBody.append(time)
-
-
-
-                divTicket.append(imgTicket);
-                divTicket.append(divBody);
-                scheduleDiv.append(divTicket);
-                
-
-            }
-
-        });
+        }); 
     })
+
+    const ticketDiv = document.querySelector('.ticket')
+    const bookingItem = JSON.parse(localStorage.getItem("booking_item"));
+    const movieData = JSON.parse(localStorage.getItem("detail_movie"));
+    const filterBookingItem = bookingItem.filter(item => item.movie_id == movie_id);
+    console.log(filterBookingItem, "filter");
+    if (filterBookingItem.length > 0) {
+        const divTicket = document.createElement("div");
+        divTicket.innerHTML = "";
+        divTicket.style = "width: 18rem; border: solid"
+        divTicket.className = "card";
+        const imgTicket = document.createElement("img");
+        imgTicket.src = movieData.poster
+        imgTicket.className = "card-img-top"
+        const divBody = document.createElement('div')
+        divBody.className = "card-body"
+        const ticket = document.createElement('h5')
+        ticket.className = "card-title"
+        ticket.innerText = "Cinemas Ticket"
+        divBody.append(ticket)
+        const title = document.createElement('p')
+        title.className = "card-text"
+        title.innerText = movieData.title;
+        divBody.append(title)
+        const seat = document.createElement('p')
+        seat.className = "card-text"
+        seat.innerText = filterBookingItem[0].seat_id;
+        divBody.append(seat)
+        const time = document.createElement('p')
+        time.className = "card-text"
+        time.innerText = filterBookingItem[0].start_time;
+        divBody.append(time)
+
+        divTicket.append(imgTicket);
+        divTicket.append(divBody);
+        ticketDiv.append(divTicket);
+        
+
+    }
 })

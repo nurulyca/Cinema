@@ -681,6 +681,7 @@ def buy_ticket():
             result = connection.execute(qry, booking_id=book.booking_id)
             for item in result:
                 all.append({
+                    'movie_id' : item[0],
                     'booking_id': item[1], 
                     'seat_id': item[4], 
                     'title': item[14],

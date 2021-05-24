@@ -161,3 +161,29 @@ function addMovie(payload, token) {
         .then(response => response.json())
         .then(jsonResponse => jsonResponse)
 }
+
+// add movie schedule
+function addScheduleMovie(payload, token) {
+    return fetch ('http://localhost:5000/add_movie_schedule/', {
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+            'access_token' : token
+        },
+        body : payload})
+        .then(response => response.json())
+        .then(jsonResponse => jsonResponse)
+    }
+
+// edit movie schedule
+function editScheduleMovie(payload, token, id) {
+    return fetch ('http://localhost:5000/edit_movie_schedule/' + id, {
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+            'access_token' : token
+        },
+        body : payload})
+        .then(response => response.json())
+        .then(jsonResponse => jsonResponse)
+}

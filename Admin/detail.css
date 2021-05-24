@@ -158,21 +158,19 @@ b {
 #updateMovie {
   margin-top: 30px;
   margin-left: -150px;
+  margin-bottom: 30px;
 }
 
 .schedule-title {
   margin-left: 100px;
   font-size: 20px;
+  margin-top: -130px;
 }
 
 .button-update {
-  margin-left: 100px;
+  margin-left: 125px;
 }
 
-.add-schedule-button {
-  margin-top: -140px;
-  cursor: pointer;
-}
 
 .container-add-schedule {
   margin-top: 170px;
@@ -181,5 +179,33 @@ b {
 
 .button-add-schedule {
   width: 300px;
+  margin-top: 20px;
 }
 
+#add-schedule-button{
+  cursor: pointer;
+  margin-left: 50px;
+  margin-bottom: -30px;
+  font-size: x-large;
+}
+
+.edit-schedule-box {
+  margin-top: 50px;
+}
+
+#edit-schedule-button {
+  font-size: medium;
+  margin-left: 40px;
+  cursor: pointer;
+  font-size: x-large;
+}
+
+.schedule-edit-title {
+  font-size: 20px;
+  margin-left: 100px;
+}
+
+.button-edit-schedule {
+  width: 300px;
+  margin-top: 20px;
+}

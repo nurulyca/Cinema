@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const toggleEdit = document.getElementById("toggle-edit");
+    const toggleAdd = document.getElementById("add-schedule-button");
+    const toggleEditSchedule = document.getElementById("edit-schedule-button");
     const updateTitle = document.querySelector('input[name="updatetitle"]');
     const updateGenre = document.querySelector('input[name="updategenre"]');
     const updateDuration = document.querySelector('input[name="updateduration"]');
     const updatePrice = document.querySelector('input[name="updateprice"]');
     const updateRelease = document.querySelector('input[name="updateyear"]');
+    const addScheduleForm = document.querySelector('#add-schedule');
+    const editScheduleForm = document.querySelector('#edit-schedule');
     console.log('load');
     // get the detail movie by movie_id
     let params = window.location.search.split("?")[1]
@@ -191,18 +195,74 @@ document.addEventListener('DOMContentLoaded', function() {
                 time.innerText = bookingItem.start_time;
                 divBody.append(time)
 
-
-
                 divTicket.append(imgTicket);
                 divTicket.append(divBody);
                 scheduleDiv.append(divTicket);
-                
 
             }
 
         });
     })
 
+    toggleAdd.onclick = () => {
+        var x = document.getElementById("add-schedule")
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+    }
 
-    
-})
+    addScheduleForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(addScheduleForm);
+        const objectData = Object.fromEntries(data);
+        const payload = {
+            start_movie : objectData.addstart,
+            end_movie : objectData.addend,
+            movie_id : objectData.addid,
+            movie_price : objectData.addscprice,
+            auditorium_id : objectData.addauditorium
+        }
+
+        const json = JSON.stringify(payload);
+        const token = localStorage.getItem('access_token_admin');
+        addScheduleMovie(json, token)
+        .then(items => {
+            console.log(items)
+            window.location.reload()
+        })
+    })
+
+
+    toggleEditSchedule.onclick = () => {
+        var x = document.getElementById("edit-schedule")
+        if (x.style.display === "none") {
+        x.style.display = "block";
+        } else {
+        x.style.display = "none";
+        }
+    }
+
+    editScheduleForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const data = new FormData(editScheduleForm);
+        const objectData = Object.fromEntries(data);
+        const payload = {
+            start_movie : objectData.editstart,
+            end_movie : objectData.editend,
+            movie_id : objectData.editid,
+            movie_price : objectData.editscprice,
+            auditorium_id : objectData.editauditorium
+        }
+
+        const json = JSON.stringify(payload);
+        const token = localStorage.getItem('access_token_admin');
+        editScheduleMovie(json, token, scheduled_movie_id)
+        .then(res => {
+            window.location.reload()
+        })
+    })
+
+});
