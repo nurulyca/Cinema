@@ -178,7 +178,7 @@ function addScheduleMovie(payload, token) {
 // edit movie schedule
 function editScheduleMovie(payload, token, id) {
     return fetch ('http://localhost:5000/edit_movie_schedule/' + id, {
-        method : 'POST',
+        method : 'PUT',
         headers : {
             'Content-Type' : 'application/json',
             'access_token' : token

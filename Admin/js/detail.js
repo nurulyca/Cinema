@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const toggleEdit = document.getElementById("toggle-edit");
     const toggleAdd = document.getElementById("add-schedule-button");
-    const toggleEditSchedule = document.getElementById("edit-schedule-button");
     const updateTitle = document.querySelector('input[name="updatetitle"]');
     const updateGenre = document.querySelector('input[name="updategenre"]');
     const updateDuration = document.querySelector('input[name="updateduration"]');
@@ -9,6 +8,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const updateRelease = document.querySelector('input[name="updateyear"]');
     const addScheduleForm = document.querySelector('#add-schedule');
     const editScheduleForm = document.querySelector('#edit-schedule');
+    const editScStart = document.querySelector('input[name="editstart"]');
+    const editScEnd = document.querySelector('input[name="editend"]');
+    const editScPrice = document.querySelector('input[name="editscprice"]');
+    const editScAuditorium = document.querySelector('input[name="editauditorium"]');
+    let scheduled_movie_id = 0;
     console.log('load');
     // get the detail movie by movie_id
     let params = window.location.search.split("?")[1]
@@ -82,15 +86,40 @@ document.addEventListener('DOMContentLoaded', function() {
             const startTime = item.start_time.split(" ")
             const div = document.createElement('div')
             div.className = "card"
+            const divTop = document.createElement('div');
+            divTop.className = "container"
             const pAuditorium = document.createElement('p')
             pAuditorium.innerText = "Auditorium: " + item.auditorium_id
-            div.append(pAuditorium)
+            
             const p = document.createElement('p')
             p.innerText = "Playing Date: " + new Date(startTime[0]).toDateString()
-            div.append(p)
             const pStartTime = document.createElement('p')
             pStartTime.innerText = "Start Time: " + startTime[1]
-            div.append(pStartTime)
+            
+            const toggleItem = document.createElement('i')
+            toggleItem.className = "far fa-edit fa-2x mb-4"
+            toggleItem.onclick = () => {
+                scheduled_movie_id = item.scheduled_movie_id
+                editScStart.value = item.start_time
+                editScEnd.value = item.end_time
+                editScPrice.value = item.price
+                editScAuditorium.value = item.auditorium_id
+                var x = document.getElementById("edit-schedule")
+                if (x.style.display === "none") {
+                x.style.display = "block";
+                } else {
+                x.style.display = "none";
+                }
+            }
+
+            divTop.append(pAuditorium)
+            divTop.append(p)
+            divTop.append(pStartTime)
+            divTop.append(toggleItem)
+            div.append(divTop);
+            
+
+
             const buttonBook = document.createElement('button')
             buttonBook.onclick = e => {    
                 getListSeat(item.auditorium_id)
@@ -235,15 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
-    toggleEditSchedule.onclick = () => {
-        var x = document.getElementById("edit-schedule")
-        if (x.style.display === "none") {
-        x.style.display = "block";
-        } else {
-        x.style.display = "none";
-        }
-    }
-
     editScheduleForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -256,7 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
             movie_price : objectData.editscprice,
             auditorium_id : objectData.editauditorium
         }
-
+        console.log(objectData);
+        console.log(payload);
         const json = JSON.stringify(payload);
         const token = localStorage.getItem('access_token_admin');
         editScheduleMovie(json, token, scheduled_movie_id)
