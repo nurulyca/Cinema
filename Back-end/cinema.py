@@ -706,6 +706,22 @@ def paid_seat(id):
             all.append(item[0])
     return jsonify(all)
 
+@app.route('/booking_item/<id>')
+def booking_item(id):
+    all = []
+    with engine.connect() as connection:
+        qry = text("SELECT * from booking_item JOIN booking using (booking_id) JOIN scheduled_movie ON booking_item.scheduled_movie_id=scheduled_movie.scheduled_movie_id JOIN movie USING (movie_id) where customer_id=:id")
+        result = connection.execute(qry, id=id)
+        for item in result:
+            all.append({
+                'title' : item[15],
+                'seat_id' : item[3],
+                'start_time' : item[11],
+                'quantity' : item[8],
+                'poster' : item[19]
+            })
+        return jsonify(all)
+
 @app.route('/pay_ticket/', methods = ['POST'])
 def pay_ticket():
     data = request.get_json()

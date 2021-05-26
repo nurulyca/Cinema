@@ -134,3 +134,10 @@ function loginAdmin(payload){
         .then(response => response.json())
         .then(jsonResponse => jsonResponse)
 }
+
+// get booking item by customer id
+function bookingItem(id) {
+    return fetch('http://localhost:5000/booking_item/' + id)
+    .then(response => response.json())
+    .then(jsonResponse => jsonResponse)
+}

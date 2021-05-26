@@ -45,11 +45,7 @@ body{
     list-style: none;
   }
 
-  .menu-list-item{
-    margin-right: 30px;
-    cursor: pointer;
-    font-family:  'Poppins', sans-serif;
-  }
+  
   
   
 a {
@@ -195,11 +191,10 @@ p.about-text-desc {
   .text {font-size: 11px}
 }
 
-h2 {
+.title-heading {
   margin-top: 50px;
-  font-family: 'Bungee Shade', cursive;
-  font-weight: bolder;
-  font-size: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
   color: rgb(199, 146, 13);
   text-align: center;
 }
@@ -287,6 +282,7 @@ h2 {
   float: left;
   width: 80%;
   background: #f1f1f1;
+  border-radius: 3px;
   
 }
 
@@ -321,6 +317,12 @@ h2 {
   font-size: 15px;
 }
 
+.best-five{
+  cursor: pointer;
+  font-family:  'Poppins', sans-serif;
+  margin-left: -30px;
+}
+
 .register-button{
   font-family:'Montserrat', sans-serif;
   border-style: none;
@@ -338,7 +340,6 @@ h2 {
   color: white;
   cursor: pointer;
   font-size: 15px;
-  margin-right: 40px;
   margin-left: 15px;
 }
 
@@ -349,7 +350,13 @@ h2 {
   color: white;
   cursor: pointer;
   font-size: 15px;
-  margin-right: 350px;
+  margin-right: 330px;
+  margin-left: 25px;
   font-weight: bold;
 }
 
+.my-order-list {
+  margin-right: 15px;
+  font-family: 'Poppins', sans-serif;
+  margin-left: 25px;
+}

@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }); 
     })
 
+    ticketButton.onclick = () => {
     const ticketDiv = document.querySelector('.ticket')
     const bookingItem = JSON.parse(localStorage.getItem("booking_item"));
     const movieData = JSON.parse(localStorage.getItem("detail_movie"));
@@ -163,8 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         divTicket.append(imgTicket);
         divTicket.append(divBody);
+          ticketDiv.append(divTicket); 
         ticketDiv.append(divTicket);
+          ticketDiv.append(divTicket); 
         
-
-    }
 })

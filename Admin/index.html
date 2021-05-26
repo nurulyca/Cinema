@@ -89,7 +89,7 @@
     <div class="container">
         <div class="content-container">
             <div class="featured-content"
-            style="background: linear-gradient(to bottom, rgb(39, 66, 66), rgb(38, 38, 38)); height: 200vw;">
+            style="background: linear-gradient(to bottom, rgb(39, 66, 66), rgb(94, 130, 126)); height: 200vw;">
             <div style="display: flex;justify-content: space-between;">
                 <img class="featured-title" src="image/title.png" alt="">
                 <div class="featured-desc" style="align-self: center">
@@ -167,12 +167,14 @@
           for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";  
           }
+
           slideIndex++;
           if (slideIndex > slides.length) {
               slideIndex = 1
             }    
-          slides[slideIndex-1].style.display = "block";  
-          setTimeout(showSlides, 5000); // Change image every 2 seconds
+
+          slides[slideIndex-1].style.display = "block"; 
+          setTimeout(showSlides, 5000); // Change image every 5 seconds
         }
     </script>
 </body> 
