@@ -58,14 +58,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         const seatBox = document.createElement('div')
                         seatBox.className = "seat-box"
                         seatBox.innerText = seat.row_id + seat.row_seat_id
-                    
-                        if(paidSeats.includes(seat.seat_id)){
+                        if (paidSeats.includes(seat.seat_id)) {
                             seatBox.className = "paid-seat-box"
                         } else {
                             seatBox.onclick = e => {
                                 e.preventDefault()
                                 selectedSeat.push(seat.seat_id)
                                 seatBox.className = "selected-seat-box"
+                                if (selectedSeat.includes(seat.seat_id)) {
+                                    seatBox.onclick = e => {
+                                        e.preventDefault()
+                                        selectedSeat = selectedSeat.filter(item => item.seat_id != seat.seat_id)
+                                        seatBox.className = "seat-box"
+                                    }
+                                }
                             }
                         }
                         seatDiv.append(seatBox)
@@ -128,44 +134,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }); 
     })
-
-    ticketButton.onclick = () => {
-    const ticketDiv = document.querySelector('.ticket')
-    const bookingItem = JSON.parse(localStorage.getItem("booking_item"));
-    const movieData = JSON.parse(localStorage.getItem("detail_movie"));
-    const filterBookingItem = bookingItem.filter(item => item.movie_id == movie_id);
-    console.log(filterBookingItem, "filter");
-    if (filterBookingItem.length > 0) {
-        const divTicket = document.createElement("div");
-        divTicket.innerHTML = "";
-        divTicket.style = "width: 18rem; border: solid"
-        divTicket.className = "card";
-        const imgTicket = document.createElement("img");
-        imgTicket.src = movieData.poster
-        imgTicket.className = "card-img-top"
-        const divBody = document.createElement('div')
-        divBody.className = "card-body"
-        const ticket = document.createElement('h5')
-        ticket.className = "card-title"
-        ticket.innerText = "Cinemas Ticket"
-        divBody.append(ticket)
-        const title = document.createElement('p')
-        title.className = "card-text"
-        title.innerText = movieData.title;
-        divBody.append(title)
-        const seat = document.createElement('p')
-        seat.className = "card-text"
-        seat.innerText = filterBookingItem[0].seat_id;
-        divBody.append(seat)
-        const time = document.createElement('p')
-        time.className = "card-text"
-        time.innerText = filterBookingItem[0].start_time;
-        divBody.append(time)
-
-        divTicket.append(imgTicket);
-        divTicket.append(divBody);
-          ticketDiv.append(divTicket); 
-        ticketDiv.append(divTicket);
-          ticketDiv.append(divTicket); 
-        
+    
 })

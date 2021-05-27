@@ -132,11 +132,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log(paidSeats, "PAID")
                     let selectedSeat = [];
                     listSeat.forEach(seat => {
-                        
                         const seatBox = document.createElement('div')
                         seatBox.className = "seat-box"
                         seatBox.innerText = seat.row_id + seat.row_seat_id
-                    
                         if(paidSeats.includes(seat.seat_id)){
                             seatBox.className = "paid-seat-box"
                         } else {
@@ -153,11 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     buttonCheckOut.onclick = (e) => {
                         let customer_data = JSON.parse(localStorage.getItem('customer_data'))
                         let access_token = localStorage.getItem('access_token')
-                        let payload = {
-                            scheduled_movie_id : item.scheduled_movie_id,
-                            wallet_id : "" + customer_data.wallet_id,
-                            array_seats: ["1", "2"]
-                        }
 
                         const data = new FormData();
                         data.append('scheduled_movie_id', item.scheduled_movie_id)

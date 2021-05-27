@@ -100,6 +100,7 @@ b {
     color: white;
     cursor: pointer;
 }
+
 .selected-seat-box{
     background-color: rgb(14, 14, 106);
 }
