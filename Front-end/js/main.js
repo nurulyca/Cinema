@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         movieList.innerHTML = ""
         getListByTitle(searchTitle.value)
           .then(titles => {
-              console.log(titles)
-            titles.forEach(item => {
+                console.log(titles)
+                titles.forEach(item => {
                 const divParent = document.createElement('div')
                 divParent.className = "movie-list-item"
                 divParent.onclick = () => {

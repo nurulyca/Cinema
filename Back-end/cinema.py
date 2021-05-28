@@ -262,13 +262,21 @@ def update_customer():
             'message': 'Name must contain minimum of 2 letters'
         }), 400
 
+    try:
+        wall = Wallet.query.filter_by(customer_id = cust.customer_id).first_or_404()
+    except:
+        return jsonify ({
+            "message" : "Error!"
+        }), 401
+
     db.session.commit()
 
     return jsonify({
             'customer_id' : cust.customer_id,
             'name' : cust.customer_name,
             'email' : cust.customer_email,
-            'password' : cust.customer_password
+            'password' : cust.customer_password,
+            'wallet_id' : wall.wallet_id
         })
 
 @app.route('/create_movie/', methods=['POST'])

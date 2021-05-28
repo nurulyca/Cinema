@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const updateTitle = document.querySelector('input[name="updatetitle"]');
     const updateGenre = document.querySelector('input[name="updategenre"]');
     const updateDuration = document.querySelector('input[name="updateduration"]');
-    const updatePrice = document.querySelector('input[name="updateprice"]');
+    // const updatePrice = document.querySelector('input[name="updateprice"]');
     const updateRelease = document.querySelector('input[name="updateyear"]');
     const addScheduleForm = document.querySelector('#add-schedule');
     const editScheduleForm = document.querySelector('#edit-schedule');
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let moviePoster = "";
     getDetailMovie(movie_id)
     .then(res => {
+        console.log(res)
         const posterImg = document.querySelector(".poster")
         posterImg.src = res[0].poster
         localStorage.setItem("detail_movie", JSON.stringify(res[0]))
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const detailMovie = JSON.parse(localStorage.getItem("detail_movie"))
         updateTitle.value = detailMovie.title
         updateGenre.value = detailMovie.category
-        updatePrice.value = detailMovie.price
+        // updatePrice.value = detailMovie.price
         updateRelease.value = detailMovie.release_year
         updateDuration.value = detailMovie.duration
         var x = document.getElementById("updateMovie")
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 scheduled_movie_id = item.scheduled_movie_id
                 editScStart.value = item.start_time
                 editScEnd.value = item.end_time
-                editScPrice.value = item.price
+                // editScPrice.value = item.price
                 editScAuditorium.value = item.auditorium_id
                 var x = document.getElementById("edit-schedule")
                 if (x.style.display === "none") {

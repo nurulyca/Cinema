@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const dataCustomer = JSON.parse(localStorage.getItem("customer_data"))
     const updateName = document.querySelector('input[name="updatename"]');
-    const updatePassword = document.querySelector('input[name="updatepassword"]');
     const updateEmail = document.querySelector('input[name="updateemail"]');
     const toggleEdit = document.getElementById("toggle-edit")
     const emailText = document.querySelector('.email');
@@ -46,7 +45,7 @@ updateForm.addEventListener('submit', (e) => {
   .then(res => res.json())
   .then(jsonRes => {
     console.log(jsonRes)
-    localStorage.setItem('customer_data', JSON.strin)
+    localStorage.setItem('customer_data', JSON.stringify(jsonRes))
     window.location.reload()
   })
 

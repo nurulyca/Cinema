@@ -77,6 +77,21 @@ document.addEventListener('DOMContentLoaded', function() {
         addMovie(json, token)
         .then(items => {
             console.log(items)
+            const payload = {
+                start_movie :"2021-05-08 10:30:00",
+                end_movie : "2021-05-08 12:00:00",
+                movie_id : items.movie_id,
+                movie_price : 30000,
+                auditorium_id : 1
+            }
+    
+            const json = JSON.stringify(payload);
+            const token = localStorage.getItem('access_token_admin');
+            addScheduleMovie(json, token)
+            .then(items => {
+                console.log(items)
+                window.location.reload()
+            })
             getAllMovies().then(movies => {
                 movieList.innerHTML = ""
                 movies.forEach(item => {

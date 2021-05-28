@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const movieDuration = document.querySelector(".duration")
         movieDuration.innerHTML = res[0].duration + " " + "minutes"
         const moviePrice = document.querySelector(".price")
-        moviePrice.innerHTML = res[0].price
+        moviePrice.innerHTML = "IDR" + " " + res[0].price
         const movieRelease = document.querySelector(".release")
         movieRelease.innerHTML = res[0].release_year
         console.log(res)
@@ -67,9 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 seatBox.className = "selected-seat-box"
                                 if (selectedSeat.includes(seat.seat_id)) {
                                     seatBox.onclick = e => {
-                                        e.preventDefault()
-                                        selectedSeat = selectedSeat.filter(item => item.seat_id != seat.seat_id)
-                                        seatBox.className = "seat-box"
+                                       window.location.reload()
                                     }
                                 }
                             }
@@ -79,13 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
                     const buttonCheckOut = document.createElement('button');
                     buttonCheckOut.onclick = (e) => {
+                        e.preventDefault()
                         let customer_data = JSON.parse(localStorage.getItem('customer_data'))
                         let access_token = localStorage.getItem('access_token')
-                        let payload = {
-                            scheduled_movie_id : item.scheduled_movie_id,
-                            wallet_id : "" + customer_data.wallet_id,
-                            array_seats: ["1", "2"]
-                        }
 
                         const data = new FormData();
                         data.append('scheduled_movie_id', item.scheduled_movie_id)
@@ -95,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      
                         buyTicket(json, access_token)
                         .then(result => {
-                            console.log(result)
+                            console.log(result, '======================')
                             if(!result.message) {
                                 const booked = localStorage.getItem("booking_item");
                                 if (booked) {
@@ -107,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     listBook.push(result[0]);
                                     localStorage.setItem("booking_item", JSON.stringify(listBook))
                                 }
-                                window.location.reload()
+                                // window.location.reload()
                             } else {
                                 const alertDiv = document.createElement('div')
                                 alertDiv.className = "alert alert-danger"

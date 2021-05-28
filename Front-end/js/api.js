@@ -12,13 +12,6 @@ function getDetailMovie(id) {
     .then(jsonResponse => jsonResponse)
 }
 
-// get list movie by date
-function getListByDate(date){
-    return fetch('http://localhost:5000/list_movie/' + date)
-        .then(response => response.json())
-        .then(jsonResponse => jsonResponse)
-}
-
 // get list movie by title
 function getListByTitle(title){
     return fetch('http://localhost:5000/search_movie/' + title)
