@@ -79,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             topUp(json, res.access_token, customer_data.wallet_id)
               .then(result => {
                 console.log(result)
-                // window.location.reload()
+                alert("Top up successfully!")
+                window.location.reload()
               })
             console.log("res", res)
             console.log("amount", amount)

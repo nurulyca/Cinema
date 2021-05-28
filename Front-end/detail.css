@@ -7,7 +7,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     font-size: 30px;
-    margin-left: 100px;
+    margin-left: 130px;
     color: goldenrod;
     background: none;
     border: goldenrod;
@@ -19,7 +19,7 @@ p {
 }
 
 .information {
-    margin-top: 20px;
+    margin-top: 40px;
     list-style: none;
     display: table;
   }
@@ -38,10 +38,10 @@ b {
 }
 
 .title {
-  margin-top: 100px;
+    margin-top: 100px;
     margin-left: 40px;
     font-weight: bolder;
-    color: maroon;
+    color: rgb(33, 101, 101);
     font-size: 35px;
     width: 300px;
 }

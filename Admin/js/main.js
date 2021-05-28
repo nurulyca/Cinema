@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         getListByTitle(searchTitle.value)
           .then(titles => {
               console.log(titles)
-            titles.forEach(item => {
+                titles.forEach(item => {
                 const divParent = document.createElement('div')
                 divParent.className = "movie-list-item"
                 divParent.onclick = () => {
@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
             movie_price : objectData.addprice,
             movie_poster : objectData.addposter
         }
-
         const json = JSON.stringify(payload);
         const token = localStorage.getItem('access_token_admin');
         addMovie(json, token)
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(items => {
                 console.log(items)
                 window.location.reload()
-            })
+                })
             getAllMovies().then(movies => {
                 movieList.innerHTML = ""
                 movies.forEach(item => {

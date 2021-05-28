@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     listBook.push(result[0]);
                                     localStorage.setItem("booking_item", JSON.stringify(listBook))
                                 }
-                                // window.location.reload()
+                                window.location.href = "order.html"
                             } else {
                                 const alertDiv = document.createElement('div')
                                 alertDiv.className = "alert alert-danger"

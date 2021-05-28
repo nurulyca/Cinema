@@ -117,8 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
             divTop.append(toggleItem)
             div.append(divTop);
             
-
-
             const buttonBook = document.createElement('button')
             buttonBook.onclick = e => {    
                 getListSeat(item.auditorium_id)
@@ -182,9 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
 
             }
-            buttonBook.innerText = "Book now!"
-            buttonBook.className = "btn btn-outline-warning"
-            div.append(buttonBook)
             scheduleDiv.append(div)
 
             const bookingItem = JSON.parse(localStorage.getItem("booking_item"));
@@ -220,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 scheduleDiv.append(divTicket);
 
             }
-
         });
     })
 

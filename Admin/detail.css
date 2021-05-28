@@ -203,6 +203,7 @@ b {
 
 .fa-edit {
   margin-left: 500px;
+  cursor: pointer;
 }
 
 .schedule-edit-title {
