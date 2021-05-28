@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 movie_price : 25000,
                 auditorium_id : 1
             }
-    
             const json = JSON.stringify(payload);
             const token = localStorage.getItem('access_token_admin');
             addScheduleMovie(json, token)

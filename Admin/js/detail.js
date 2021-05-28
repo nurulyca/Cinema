@@ -91,12 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
             divTop.className = "container"
             const pAuditorium = document.createElement('p')
             pAuditorium.innerText = "Auditorium: " + item.auditorium_id
-            
             const p = document.createElement('p')
             p.innerText = "Playing Date: " + new Date(startTime[0]).toDateString()
             const pStartTime = document.createElement('p')
             pStartTime.innerText = "Start Time: " + startTime[1]
-            
             const toggleItem = document.createElement('i')
             toggleItem.className = "far fa-edit fa-2x mb-4"
             toggleItem.onclick = () => {
@@ -171,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 alertDiv.role = "alert"
                                 alertDiv.innerText = result.message
                                 div.append(alertDiv)
-                                // window.location.href = "topup.html"
                             }
                         }).catch(err => {
                             console.log(err)
