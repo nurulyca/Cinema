@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
   let customer_data = JSON.parse(localStorage.getItem('customer_data'))
   const totalAmount = document.querySelector('.left-amount');
-  console.log("load");
   saldoLeft(customer_data.wallet_id)
   .then(res => {
-    console.log(res)
+    console.log(res, "=====")
     totalAmount.innerHTML = "Current saldo (IDR) :" + " " + res[0].total_amount
     })
 
@@ -70,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault()
         const data = new FormData(loginForm);
         const json = JSON.stringify((Object.fromEntries(data)));
-        
         login(json)
         .then(res => {
             const payload = {
@@ -81,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             topUp(json, res.access_token, customer_data.wallet_id)
               .then(result => {
                 console.log(result)
-                window.location.reload()
+                // window.location.reload()
               })
             console.log("res", res)
             console.log("amount", amount)

@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 start_movie :"2021-05-08 10:30:00",
                 end_movie : "2021-05-08 12:00:00",
                 movie_id : items.movie_id,
-                movie_price : 30000,
+                movie_price : 25000,
                 auditorium_id : 1
             }
     

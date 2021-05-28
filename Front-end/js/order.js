@@ -17,8 +17,5 @@ document.addEventListener('DOMContentLoaded', function(){
                 });
                 tbody.appendChild(row)
             });
-
-    })
-       
-            
+    })     
         })
