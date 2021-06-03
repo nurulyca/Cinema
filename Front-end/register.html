@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinema</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 </head>
@@ -18,13 +19,32 @@
         <input type="text" id="email" name="customer_email" placeholder="Enter email" style="font-family: 'Montserrat', sans-serif"><br>
         <label for="password">Password</label><br>
         <input type="password" id="password" name="customer_password" placeholder="Enter password" style="font-family: 'Montserrat', sans-serif"><br><br>
-        <input type="submit" value="Register"><br><br><br>
+        <input style="font-size:medium;" type="submit" value="Register">
         </form>
     </div>
     <div>
         <p> If you have registered, <a href="login.html" style="text-decoration: none; color: white;"> login here.</a></p>
     </div>
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+        role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registered successfully!</h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your account has been created. 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Login, now.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
         <script src="js/register.js"></script>
         <script src="js/api.js"></script>
 </body>

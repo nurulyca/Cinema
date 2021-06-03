@@ -14,14 +14,15 @@ body {
     ;
 }
 
-#email {
-  background-color: none;
+.title-login {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 100px;
 }
 
 input[type=text], input[type=password] {
-  width: 50%;
+  width: 70%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 5px 0px;
   display: inline-block;
   border: 1px solid rgb(210, 198, 198);
   box-sizing: border-box;
@@ -46,7 +47,7 @@ button {
 
 input[type=submit] {
   font-family: 'Montserrat', sans-serif;
-  width: 50%;
+  width: 60%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -66,12 +67,14 @@ input[type=submit] {
   }
 
 label {
-  margin-left: 20px;
+  margin: 10px;
+  margin-left: 40px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 p {
   text-align: center;
-  margin-top: 420px;
+  margin-top: 440px;
 }
 
 h1 {
@@ -88,7 +91,8 @@ h1 {
 #loginForm, #registerForm {
   margin-top: 60px;
   color: white;
-  width: 500px;
+  width: 400px;
+  height: 430px;
   padding: 30px;
   top: 50%;
   left: 50%;
@@ -100,6 +104,13 @@ h1 {
 
 #loginForm.h1, #registerForm.h1 {
   color: white;
-  text-transform: uppercase;
   font-weight: 700;
+}
+
+.register {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.modal {
+  color: black;
 }

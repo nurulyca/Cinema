@@ -31,6 +31,7 @@ function closeModal() {
     document.getElementById("backdrop").style.display = "none"
     document.getElementById("exampleModal").style.display = "none"
     document.getElementById("exampleModal").classList.remove("show")
+    window.location.href = "login.html"
 }
 // Get the modal
 var modal = document.getElementById('exampleModal');
