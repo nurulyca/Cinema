@@ -429,6 +429,8 @@ def edit_movie_schedule(id):
         schedule.end_movie = data['end_movie']
     if 'movie_price' in data:
         schedule.movie_price = data['movie_price']
+    if 'auditorium_id' in data:
+        schedule.auditorium_id = data['auditorium_id']
     
     db.session.commit()
     return {

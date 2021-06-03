@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const pStartTime = document.createElement('p')
             pStartTime.innerText = "Start Time: " + startTime[1]
             const toggleItem = document.createElement('i')
-            toggleItem.className = "far fa-edit fa-2x mb-4"
+            toggleItem.className = "far fa-edit fa-2x mb-4 edit-schedule"
             toggleItem.onclick = () => {
                 scheduled_movie_id = item.scheduled_movie_id
                 editScStart.value = item.start_time
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
             auditorium_id : objectData.editauditorium
         }
         console.log(objectData);
-        console.log(payload);
+        console.log(payload, "payload");
         const json = JSON.stringify(payload);
         const token = localStorage.getItem('access_token_admin');
         editScheduleMovie(json, token, scheduled_movie_id)

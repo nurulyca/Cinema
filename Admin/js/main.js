@@ -135,10 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
             spanChild.className = "movie-list-item-title"
             spanChild.innerHTML = item.title
             divParent.append(spanChild)
-            const buttonChild = document.createElement('button')
-            buttonChild.className = "movie-list-item-button"
-            buttonChild.innerHTML = "Book"
-            divParent.append(buttonChild)
             movieList.append(divParent)
         });
         console.log(movies)
