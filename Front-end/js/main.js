@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {  
-    const search_bar = document.querySelector(".search_bar");
+    const search_bar = document.querySelector(".search");
     const searchTitle = document.querySelector('input[name="searchname"]');
     const movieList  = document.querySelector('.movie-list');
     const divRegister = document.querySelector(".register-button")

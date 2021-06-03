@@ -79,14 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
             topUp(json, res.access_token, customer_data.wallet_id)
               .then(result => {
                 console.log(result)
-                alert("Top up successfully!")
-                window.location.reload()
+                openModal("Top up success", "Your saldo has been updated")
               })
             console.log("res", res)
             console.log("amount", amount)
             if(!res.message) {
             }else {
-                alert(res.message)
+                openModal("Error", res.message)
             }
         }).catch(err => {
             console.log("err", err)
@@ -94,3 +93,25 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 });
+
+function openModal(title, message) {
+  document.getElementById("backdrop").style.display = "block"
+  document.getElementById("exampleModal").style.display = "block"
+  document.getElementById("exampleModal").classList.add("show")
+  document.querySelector('.modal-title').innerHTML = title
+  document.querySelector('.modal-body').innerHTML = message
+}
+function closeModal() {
+  document.getElementById("backdrop").style.display = "none"
+  document.getElementById("exampleModal").style.display = "none"
+  document.getElementById("exampleModal").classList.remove("show")
+}
+// Get the modal
+var modal = document.getElementById('exampleModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+if (event.target == modal) {
+  closeModal()
+}
+}

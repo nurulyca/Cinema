@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(res => {
             console.log(res)
             if(!res.message) {
-                alert("Registered successfully!")
+                openModal()
                 window.location.href = "login.html"
             }else {
                 alert(res.message)
@@ -21,3 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     })
 })
+
+function openModal() {
+    document.getElementById("backdrop").style.display = "block"
+    document.getElementById("exampleModal").style.display = "block"
+    document.getElementById("exampleModal").classList.add("show")
+}
+function closeModal() {
+    document.getElementById("backdrop").style.display = "none"
+    document.getElementById("exampleModal").style.display = "none"
+    document.getElementById("exampleModal").classList.remove("show")
+}
+// Get the modal
+var modal = document.getElementById('exampleModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    closeModal()
+  }
+}

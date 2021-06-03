@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
     let customer_data = JSON.parse(localStorage.getItem('customer_data'))
-    console.log('load');
     bookingItem(customer_data.customer_id)
     .then(movies => {
         console.log(movies) 

@@ -1,5 +1,4 @@
 * {
-    background-image: url(image/movie.jpeg);
     margin: 0;
   }
   
@@ -32,7 +31,7 @@
     
     .logo {
       font-size: 30px;
-      color: rgb(255, 255, 255);
+      color: rgb(28, 104, 104);
       font-family: 'Poppins', sans-serif;
     }
     
@@ -58,7 +57,8 @@
     font-weight: bold;
     text-align: left;
     margin: 4%;
-    margin-bottom: -100px;
+    margin-bottom: -90px;
+    margin-top: 10px;
 }
 
 .movie-list-container{
@@ -73,6 +73,7 @@
     height: 300px;
     align-items: center;
     margin-top: 30px;
+    margin-left: 20px;
     flex-wrap: wrap;
   }
   

@@ -718,7 +718,7 @@ def paid_seat(id):
 def booking_item(id):
     all = []
     with engine.connect() as connection:
-        qry = text("SELECT * from booking_item JOIN booking using (booking_id) JOIN scheduled_movie ON booking_item.scheduled_movie_id=scheduled_movie.scheduled_movie_id JOIN movie USING (movie_id) where customer_id=:id")
+        qry = text("SELECT * from booking_item JOIN booking using (booking_id) JOIN scheduled_movie ON booking_item.scheduled_movie_id=scheduled_movie.scheduled_movie_id JOIN movie USING (movie_id) where customer_id=:id order by booking_item.booking_item_id desc")
         result = connection.execute(qry, id=id)
         for item in result:
             all.append({

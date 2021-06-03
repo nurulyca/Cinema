@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const movieList  = document.querySelector('.movie-list');
-    console.log('load');
     topFive().then(movies => {
         movies.forEach(item => {
             const divParent = document.createElement('div')

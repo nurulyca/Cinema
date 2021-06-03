@@ -154,23 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         data.append('wallet_id', customer_data.wallet_id,)
                         data.append('array_seats', selectedSeat)
                         let json = Object.fromEntries(data)
-                     
-                        buyTicket(json, access_token)
-                        .then(result => {
-                            console.log(result)
-                            if(!result.message) {
-                                localStorage.setItem("booking_item", JSON.stringify(result[0]))
-                                window.location.reload()
-                            } else {
-                                const alertDiv = document.createElement('div')
-                                alertDiv.className = "alert alert-danger"
-                                alertDiv.role = "alert"
-                                alertDiv.innerText = result.message
-                                div.append(alertDiv)
-                            }
-                        }).catch(err => {
-                            console.log(err)
-                        })
 
                    }
                    buttonCheckOut.innerText = "Check out";

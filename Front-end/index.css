@@ -1,11 +1,8 @@
 * {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
 }
 
 body{
-  font-family: 'Roboto', sans-serif;
-  width: 100%;
   height: 100vh;
 }
 
@@ -21,7 +18,6 @@ body{
     align-items: center;
     padding: 0 50px;
     height: 100%;
-    width: 100%;
     color: white;
   }
   
@@ -39,9 +35,6 @@ body{
   .menu-container{ 
     flex: 10;
   }
-
-  
-  
   
 a {
   font: bold;
@@ -270,6 +263,39 @@ p.about-text-desc {
   font-family: 'Montserrat', sans-serif;
 }
 
+.box {
+  width: 150px;
+  height: 20px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-left: 80px;
+  border-style: none;
+}
+
+.box > i {
+  color: white;
+  font-size: 20px;
+  background-color: transparent;
+  border-style: none;
+}
+
+.box > input {
+  background-color: transparent;
+  border-style: black;
+  flex: 1;
+  height: 20px;
+  border: none;
+  width: 80px;
+  color: white;
+}
+
+.search{
+  cursor: pointer;
+}
+
 .search input[type=text] {
   padding: 10px;
   font-size: 17px;
@@ -277,7 +303,7 @@ p.about-text-desc {
   float: left;
   width: 80%;
   background: #f1f1f1;
-  border-radius: 3px;
+  border-radius: 30px;
   
 }
 
@@ -293,7 +319,7 @@ p.about-text-desc {
   border-left: none; /* Prevent double borders */
   cursor: pointer;
   border-style: none;
-  border-radius: 5px;
+  border-radius: 30px;
 }
 
 /* Clear floats */
@@ -308,16 +334,9 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 17px;
-  font-family: 'Roboto', sans-serif;
-  margin-right: 10px;
-}
-
-.best-five{
-  cursor: pointer;
-  font-size: 17px;
-  margin-left: -30px;
-  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: -5px;
 }
 
 .register-button{
@@ -325,21 +344,34 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 17px;
-  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
   margin-right: 15px;
-  margin-left: 10px;
 }
+
+.best-five{
+  cursor: pointer;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+}
+
 
 .profile-button {
   border-style: none;
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 17px;
-  margin-right: 45px;
-  margin-left: 35px;
-  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  margin-left: 21px;
+  margin-right: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.login-button {
+  margin-left: 50px;
+  margin-right: 20px;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .topup-button {
@@ -347,13 +379,13 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 17px;
-  margin-right: 60px;
-  margin-left: 25px;
+  font-size: 13px;
+  margin-right: 22px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .my-order-list {
-  font-size: 17px;
-  margin-right: 40px;
-  margin-left: 70px;
+  font-size: 13px;
+  margin-left: 23px;
+  font-family: 'Montserrat', sans-serif;
 }

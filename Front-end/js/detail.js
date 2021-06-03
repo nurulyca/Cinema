@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     listBook.push(result[0]);
                                     localStorage.setItem("booking_item", JSON.stringify(listBook))
                                 }
-                                window.location.href = "order.html"
+                                openModal()
                             } else {
                                 const alertDiv = document.createElement('div')
                                 alertDiv.className = "alert alert-danger"
@@ -130,3 +130,24 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     
 })
+
+function openModal() {
+    document.getElementById("backdrop").style.display = "block"
+    document.getElementById("exampleModal").style.display = "block"
+    document.getElementById("exampleModal").classList.add("show")
+}
+function closeModal() {
+    document.getElementById("backdrop").style.display = "none"
+    document.getElementById("exampleModal").style.display = "none"
+    document.getElementById("exampleModal").classList.remove("show")
+    window.location.href = "order.html"
+}
+// Get the modal
+var modal = document.getElementById('exampleModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    closeModal()
+  }
+}
