@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(res)
             if(!res.message) {
                 openModal()
-                window.location.href = "login.html"
             }else {
                 alert(res.message)
             }

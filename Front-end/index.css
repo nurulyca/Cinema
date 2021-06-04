@@ -335,7 +335,7 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   font-family: 'Montserrat', sans-serif;
   margin-left: -5px;
 }
@@ -345,14 +345,14 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   font-family: 'Montserrat', sans-serif;
   margin-right: 15px;
 }
 
 .best-five{
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -362,7 +362,7 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   margin-left: 21px;
   margin-right: 20px;
   font-family: 'Montserrat', sans-serif;
@@ -371,7 +371,7 @@ p.about-text-desc {
 .login-button {
   margin-left: 50px;
   margin-right: 20px;
-  font-size: 13px;
+  font-size: 15px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -380,13 +380,13 @@ p.about-text-desc {
   background: none;
   color: white;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   margin-right: 22px;
   font-family: 'Montserrat', sans-serif;
 }
 
 .my-order-list {
-  font-size: 13px;
+  font-size: 15px;
   margin-left: 23px;
   font-family: 'Montserrat', sans-serif;
 }
